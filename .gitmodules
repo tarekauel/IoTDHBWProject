@@ -1,0 +1,6 @@
+[submodule "IoTDHBWProject-Model"]
+	path = IoTDHBWProject-Model
+	url = git@github.com:tarekauel/IoTDHBWProject-Model.git
+[submodule "IoTDHBWProject-MQ"]
+	path = IoTDHBWProject-MQ
+	url = git@github.com:tarekauel/IoTDHBWProject-MQ.git
