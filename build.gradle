@@ -1,6 +1,5 @@
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'application'
 
     group = "de.dhbw.mannheim.iot"
 
@@ -17,13 +16,14 @@ subprojects {
     }
 }
 
-project(":IoTDHBWProject-Model") {
-    mainClassName = "de.dhbw.mannheim.iot.model.HelloWorld"
+project(":Model") {
 }
 
-project(":IoTDHBWProject-MQ") {
+project(":RTA") {
+    apply plugin: 'application'
+    
     dependencies {
-        compile project(":IoTDHBWProject-Model")
+        compile project(":Model")
     }
-    mainClassName = "de.dhbw.mannheim.iot.mq.HelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.rta.RtaDemo"
 }
