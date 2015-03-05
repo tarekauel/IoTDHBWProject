@@ -33,6 +33,8 @@ project(":DB") {
 
     dependencies {
         compile project(":Model")
+        compile project(":IA")
+
     }
     mainClassName = "de.dhbw.mannheim.iot.db.DBHelloWorld"
 }
@@ -51,6 +53,8 @@ project(":MQ") {
 
     dependencies {
         compile project(":Model")
+        compile project(":IA")
+
     }
     mainClassName = "de.dhbw.mannheim.iot.mq.MQHelloWorld"
 }
