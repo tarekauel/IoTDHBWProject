@@ -1,3 +1,4 @@
 rootProject.name = 'IoTProjekt'
 
-include 'Model', 'RTA'
+include 'Model', 'RTA','IA','DB','UI','MQ'
+

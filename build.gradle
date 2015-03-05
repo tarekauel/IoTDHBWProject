@@ -27,3 +27,39 @@ project(":RTA") {
     }
     mainClassName = "de.dhbw.mannheim.iot.rta.RtaDemo"
 }
+
+project(":DB") {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(":Model")
+    }
+    mainClassName = "de.dhbw.mannheim.iot.db.DBHelloWorld"
+}
+
+project(":IA") {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(":Model")
+    }
+    mainClassName = "de.dhbw.mannheim.iot.ia.IAHelloWorld"
+}
+
+project(":MQ") {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(":Model")
+    }
+    mainClassName = "de.dhbw.mannheim.iot.mq.MQHelloWorld"
+}
+
+project(":UI") {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(":Model")
+    }
+    mainClassName = "de.dhbw.mannheim.iot.ui.UIHelloWorld"
+}
