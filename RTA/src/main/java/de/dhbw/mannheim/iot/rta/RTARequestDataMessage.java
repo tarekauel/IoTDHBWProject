@@ -1,4 +1,4 @@
-package de.dhbw.mannheim.iot.db;
+package de.dhbw.mannheim.iot.rta;
 
 import de.dhbw.mannheim.iot.communication.Message;
 
@@ -6,23 +6,20 @@ import de.dhbw.mannheim.iot.communication.Message;
  * This class is a message class for communication between components
  */
 
-public class DBGetDataMessage extends Message
+public class RTARequestDataMessage extends Message
 {
-
-    private String requestedData="ERP data";
-
-
+    private String request="";
 
 
     /** Default constructor. */
-    public DBGetDataMessage(long timeStamp, String requestedData)
+    public RTARequestDataMessage(long timeStamp, String results)
     {   super(timeStamp);
-        this.requestedData=requestedData;
+        this.request=results;
     }
 
     /** Get a String representation of this class. */
     public String toString()
     {
-        return super.toString()+"\n"+requestedData;
+        return super.toString()+"\n"+ request;
     }
 }

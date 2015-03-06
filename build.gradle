@@ -69,6 +69,8 @@ project(":UI") {
 
     dependencies {
         compile project(":Model")
+        compile project(":Communication")
+        compile project(":RTA")
     }
     mainClassName = "de.dhbw.mannheim.iot.ui.UIHelloWorld"
 }
