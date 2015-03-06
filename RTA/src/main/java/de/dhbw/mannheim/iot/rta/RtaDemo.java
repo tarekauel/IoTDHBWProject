@@ -1,5 +1,6 @@
 package de.dhbw.mannheim.iot.rta;
 import de.dhbw.mannheim.iot.communication.TcpClient;
+import de.dhbw.mannheim.iot.db.DBHelloWorld;
 import de.dhbw.mannheim.iot.model.DemoModel;
 import de.dhbw.mannheim.iot.mq.MQHelloWorld;
 import de.dhbw.mannheim.iot.mq.MQRegistrationMessage;
@@ -13,10 +14,18 @@ public class RtaDemo {
 
     public static void main(String[] args)
     {
+        //Connection to MQ
         System.out.println("client started");
-        TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
-        client.sendMessage(new MQRegistrationMessage(System.currentTimeMillis(),"machine"));
-        client.receiveMessage();
-        client.close();
+        TcpClient clientForMQ = new TcpClient(MQHelloWorld.MQ_PORT);
+        clientForMQ.sendMessage(new MQRegistrationMessage(System.currentTimeMillis(),"machine"));
+        clientForMQ.receiveMessage();
+        clientForMQ.close();
+
+        //Connection to DB
+        System.out.println("client started");
+        TcpClient clientForDB = new TcpClient(DBHelloWorld.DB_PORT);
+        clientForDB.sendMessage(new MQRegistrationMessage(System.currentTimeMillis(),"machine"));
+        clientForDB.receiveMessage();
+        clientForDB.close();
     }
 }

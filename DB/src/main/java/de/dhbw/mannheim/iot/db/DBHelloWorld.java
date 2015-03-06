@@ -10,10 +10,12 @@ import de.dhbw.mannheim.iot.mq.MQRegistrationMessage;
  * @since March 05, 2015.
  */
 public class DBHelloWorld {
+    public final static int DB_PORT=5051;
 
     /**
      * Run this class as an application.
      */
+
     public static void main(String[] args)
     {
         System.out.println("client started");

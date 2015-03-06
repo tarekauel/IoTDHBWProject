@@ -26,6 +26,7 @@ project(":RTA") {
         compile project(":Model")
         compile project(":Communication")
         compile project(":MQ")
+        compile project(":DB")
     }
     mainClassName = "de.dhbw.mannheim.iot.rta.RtaDemo"
 }
