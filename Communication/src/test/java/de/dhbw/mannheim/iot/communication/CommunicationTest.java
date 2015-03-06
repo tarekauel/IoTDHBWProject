@@ -12,5 +12,7 @@ public class CommunicationTest {
     @Test
     public void dummyTest() {
         Assert.assertEquals(1,1);
+        Assert.assertEquals(1,1);
+
     }
 }
