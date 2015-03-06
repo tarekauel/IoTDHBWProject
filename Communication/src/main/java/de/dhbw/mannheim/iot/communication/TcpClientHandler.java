@@ -59,7 +59,7 @@ public abstract class TcpClientHandler extends Thread{
                 this.messageReceived(message);
             } catch (IOException e) {
                 this.close();
-                e.printStackTrace();
+                System.out.println("Connection seems to be closed by client");
                 break;
 
             } catch (ClassNotFoundException e) {

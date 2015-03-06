@@ -39,12 +39,14 @@ public class TcpServer
         }
         catch (SecurityException se)
         {
+            this.close();
             System.err.println("Unable to get host address due to security.");
             System.err.println(se.toString());
             System.exit(1);
         }
         catch (IOException ioe)
         {
+            this.close();
             System.err.println("Unable to read data from an open socket.");
             System.err.println(ioe.toString());
             System.exit(1);
@@ -58,6 +60,7 @@ public class TcpServer
             }
             catch (IOException ioe)
             {
+                this.close();
                 System.err.println("Unable to close an open socket.");
                 System.err.println(ioe.toString());
                 System.exit(1);
@@ -81,13 +84,13 @@ public class TcpServer
             }
         }
         catch (SocketException se)
-        {
+        {   this.close();
             System.err.println("Unable to create socket.");
             System.err.println(se.toString());
             System.exit(1);
         }
         catch (IOException ioe)
-        {
+        {   this.close();
             System.err.println("Unable to read data from an open socket.");
             System.err.println(ioe.toString());
             System.exit(1);
