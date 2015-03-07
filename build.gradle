@@ -77,7 +77,6 @@ project(":UI") {
 }
 
 project(":Communication") {
-    apply plugin: 'application'
     dependencies {
         compile project(":Model")
     }

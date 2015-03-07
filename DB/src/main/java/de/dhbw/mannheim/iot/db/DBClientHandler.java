@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Michael on 05.03.2015.
- * The MQ ClientHanlder is a specific ClientHandler for handling connections to MQ
+ * The DB ClientHanlder is a specific ClientHandler for handling connections to MQ
  */
 public class DBClientHandler extends TcpClientHandler<Class<? extends Model>>{
     private static ArrayList<DBClientHandler> clientHandlers = new ArrayList<DBClientHandler>();

@@ -22,6 +22,7 @@ public class TcpClient<T> {
 
     /**
      * creates a client on a specific port
+     *
      */
     public TcpClient(int port) {
         this.port = port;
@@ -50,7 +51,7 @@ public class TcpClient<T> {
             ooStream.writeObject(model);  // send serilized payload
             System.out.println("Message sent to server");
         } catch (IOException ioe) {
-            System.out.println("Couldn't get I/O for the connection to: " +
+            System.out.println("Failed to send message to: " +
                     SERVER_HOSTNAME + ":" + port);
             System.exit(1);
         }
@@ -66,7 +67,7 @@ public class TcpClient<T> {
 
        try
        {
-           if(oiStream==null)
+           if(oiStream==null) // for the first time
            {
                InputStream iStream  = this.socket.getInputStream();
                oiStream = new ObjectInputStream(iStream);
@@ -75,7 +76,7 @@ public class TcpClient<T> {
            System.out.println("Received message:" + outModel.toString());
        }
        catch (ClassNotFoundException cne) {
-            System.out.println("Wanted class Message, but got class " + cne);
+            System.out.println("Received message has an invalid type");
        }
        catch (IOException e) {
            e.printStackTrace();

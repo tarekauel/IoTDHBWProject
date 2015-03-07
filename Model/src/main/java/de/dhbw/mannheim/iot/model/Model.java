@@ -3,12 +3,12 @@ package de.dhbw.mannheim.iot.model;
 import java.io.Serializable;
 
 /**
- * This class is the abstract class for all messages which are sent between our components
+ * This class is the abstract class for all models which are sent between our components
  */
 
 public class Model implements Serializable
 {
-    // serial version UID was generated with serialzer command
+    // serial version UID was generated with serializer command
 
     private long timeStamp;
 

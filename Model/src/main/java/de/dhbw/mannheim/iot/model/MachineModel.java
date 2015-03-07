@@ -1,8 +1,10 @@
 package de.dhbw.mannheim.iot.model;
 
 /**
- * @author Tarek Auel
- * @since March 05, 2015.
+ * @author Michael Scheid
+ * @since March 07, 2015.
+ *
+ * this class is the machine model as an interface for machine data
  */
 public class MachineModel extends Model{
     /**

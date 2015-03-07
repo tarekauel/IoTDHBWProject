@@ -11,7 +11,7 @@ import java.net.Socket;
  * To handle ClientConnections, you should create a subclass
  * which implements the methods getNewClientHandler and messageReceived
  */
-public abstract class TcpClientHandler <T> extends Thread{
+public abstract class TcpClientHandler<T> extends Thread{
 
    private Socket socket;
    protected ObjectInputStream inputStream;
@@ -57,8 +57,8 @@ public abstract class TcpClientHandler <T> extends Thread{
     public void run() {
         while (true) {
             try {
-                Model model = (Model)inputStream.readObject();
-                this.messageReceived((T) model);
+                T model = (T)inputStream.readObject();
+                this.messageReceived(model);
             } catch (IOException e) {
                 this.close();
                 System.out.println("Connection seems to be closed by client");
