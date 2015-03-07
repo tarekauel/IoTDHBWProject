@@ -1,7 +1,7 @@
 package de.dhbw.mannheim.iot.ia;
 import de.dhbw.mannheim.iot.mq.MQHelloWorld;
 import de.dhbw.mannheim.iot.communication.TcpClient;
-import de.dhbw.mannheim.iot.communication.Message;
+import de.dhbw.mannheim.iot.model.Model;
 
 
 
@@ -19,7 +19,7 @@ public class IAHelloWorld {
 
         System.out.println("client started");
         TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
-        client.sendMessage(new Message(System.currentTimeMillis()));
+        client.sendMessage(new Model(System.currentTimeMillis()));
         client.receiveMessage();
         client.close();
     }

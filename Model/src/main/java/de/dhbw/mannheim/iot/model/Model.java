@@ -1,4 +1,4 @@
-package de.dhbw.mannheim.iot.communication;
+package de.dhbw.mannheim.iot.model;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * This class is the abstract class for all messages which are sent between our components
  */
 
-public class Message implements Serializable
+public class Model implements Serializable
 {
     // serial version UID was generated with serialzer command
 
@@ -16,7 +16,7 @@ public class Message implements Serializable
 
 
     /** Default constructor. */
-    public Message(long timeStamp)
+    public Model(long timeStamp)
     {
         this.timeStamp=timeStamp;
     }

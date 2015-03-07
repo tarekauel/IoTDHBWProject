@@ -1,5 +1,5 @@
 package de.dhbw.mannheim.iot.mq;
-import de.dhbw.mannheim.iot.communication.Message;
+import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.communication.TcpClientHandler;
 
 import java.net.Socket;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Michael on 05.03.2015.
  * The MQ ClientHanlder is a specific ClientHandler for handling connections to MQ
  */
-public class MQClientHandler extends TcpClientHandler{
+public class MQClientHandler extends TcpClientHandler<Class<? extends Model>>{
     private static ArrayList<MQClientHandler> clientHandlers = new ArrayList<MQClientHandler>();
 
     /*
@@ -24,6 +24,9 @@ public class MQClientHandler extends TcpClientHandler{
         clientHandlers.add(clientHandler);
         return clientHandler;
     }
+
+
+
 
     public static TcpClientHandler getNewClientHandler(){
         return new MQClientHandler();
@@ -41,11 +44,11 @@ public class MQClientHandler extends TcpClientHandler{
     *
     * */
     @Override
-    protected void messageReceived(Message message) {
+    protected void messageReceived(Class<? extends Model> model) {
         //TODO: Implement message handling
         //just an example
         System.out.println("Sent Message back to client");
-        sendMessage(message);
+        //sendMessage(model);
 
         /**
          * analyse message...

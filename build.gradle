@@ -17,6 +17,7 @@ subprojects {
 }
 
 project(":Model") {
+
 }
 
 project(":RTA") {
@@ -76,5 +77,8 @@ project(":UI") {
 }
 
 project(":Communication") {
-
+    apply plugin: 'application'
+    dependencies {
+        compile project(":Model")
+    }
 }

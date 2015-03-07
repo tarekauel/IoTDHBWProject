@@ -1,5 +1,6 @@
 package de.dhbw.mannheim.iot.db;
-import de.dhbw.mannheim.iot.communication.Message;
+import de.dhbw.mannheim.iot.model.DemoModel;
+import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.communication.TcpClientHandler;
 
 import java.net.Socket;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * Created by Michael on 05.03.2015.
  * The MQ ClientHanlder is a specific ClientHandler for handling connections to MQ
  */
-public class DBClientHandler extends TcpClientHandler{
+public class DBClientHandler extends TcpClientHandler<Class<? extends Model>>{
     private static ArrayList<DBClientHandler> clientHandlers = new ArrayList<DBClientHandler>();
 
     /*
@@ -41,11 +42,11 @@ public class DBClientHandler extends TcpClientHandler{
     *
     * */
     @Override
-    protected void messageReceived(Message message) {
+    protected void messageReceived(Class<? extends Model> model) {
         //TODO: Implement message handling for messages from RTA
         //just an example
         System.out.println("Sent Message back to client");
-        sendMessage(message);
+        sendMessage(model);
 
         /**
          * check if message eq DBGetDataMessage

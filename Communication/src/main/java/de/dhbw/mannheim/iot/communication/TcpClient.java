@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
  */
 
 
-public class TcpClient {
+public class TcpClient<T> {
     public final static String SERVER_HOSTNAME = "localhost";
     private int port = 5050;  // socket port for client comms
     private ObjectInputStream oiStream;
@@ -43,11 +43,11 @@ public class TcpClient {
     /**
      * sends a message to the server
      * */
-    public Message sendMessage(Message message) {
+    public T sendMessage(T model) {
         try {
             OutputStream oStream = socket.getOutputStream();
             ObjectOutputStream ooStream = new ObjectOutputStream(oStream);
-            ooStream.writeObject(message);  // send serilized payload
+            ooStream.writeObject(model);  // send serilized payload
             System.out.println("Message sent to server");
         } catch (IOException ioe) {
             System.out.println("Couldn't get I/O for the connection to: " +
@@ -61,8 +61,8 @@ public class TcpClient {
      * receives a message
      * @return returns the receivedmessage
      */
-    public Message receiveMessage(){
-        Message outMessage=null;
+    public T receiveMessage(){
+        T outModel =null;
 
        try
        {
@@ -71,8 +71,8 @@ public class TcpClient {
                InputStream iStream  = this.socket.getInputStream();
                oiStream = new ObjectInputStream(iStream);
            }
-           outMessage = (Message) oiStream.readObject();
-           System.out.println("Received message:" +outMessage.toString());
+           outModel = (T) oiStream.readObject();
+           System.out.println("Received message:" + outModel.toString());
        }
        catch (ClassNotFoundException cne) {
             System.out.println("Wanted class Message, but got class " + cne);
@@ -80,7 +80,7 @@ public class TcpClient {
        catch (IOException e) {
            e.printStackTrace();
        }
-        return outMessage;
+        return outModel;
     }
 
     /**

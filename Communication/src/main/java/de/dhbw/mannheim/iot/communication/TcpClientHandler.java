@@ -1,5 +1,7 @@
 package de.dhbw.mannheim.iot.communication;
 
+import de.dhbw.mannheim.iot.model.Model;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -9,7 +11,7 @@ import java.net.Socket;
  * To handle ClientConnections, you should create a subclass
  * which implements the methods getNewClientHandler and messageReceived
  */
-public abstract class TcpClientHandler extends Thread{
+public abstract class TcpClientHandler <T> extends Thread{
 
    private Socket socket;
    protected ObjectInputStream inputStream;
@@ -25,7 +27,7 @@ public abstract class TcpClientHandler extends Thread{
      * Should be implemented in the subclass, to handle received messages
      * @param message is a abstract message which should be analysed for its instance-type
      */
-   protected abstract void messageReceived(Message message);
+   protected abstract void messageReceived(T message);
 
     /**
      * necessary to be able to create a client without a socket
@@ -55,8 +57,8 @@ public abstract class TcpClientHandler extends Thread{
     public void run() {
         while (true) {
             try {
-                Message message = (Message)inputStream.readObject();
-                this.messageReceived(message);
+                Model model = (Model)inputStream.readObject();
+                this.messageReceived((T) model);
             } catch (IOException e) {
                 this.close();
                 System.out.println("Connection seems to be closed by client");
@@ -74,7 +76,7 @@ public abstract class TcpClientHandler extends Thread{
      * sends  a message to the Client
      * @param message abstract message     *
      */
-    protected void sendMessage(Message message) {
+    protected void sendMessage(T message) {
         try {
             OutputStream oStream = socket.getOutputStream();
             ObjectOutputStream ooStream = new ObjectOutputStream(oStream);
@@ -97,5 +99,7 @@ public abstract class TcpClientHandler extends Thread{
             e.printStackTrace();
         }
     }
+
+
 }
 

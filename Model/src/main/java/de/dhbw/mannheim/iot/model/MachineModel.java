@@ -4,13 +4,13 @@ package de.dhbw.mannheim.iot.model;
  * @author Tarek Auel
  * @since March 05, 2015.
  */
-public class DemoModel extends Model{
+public class MachineModel extends Model{
     /**
      * Default constructor.
      *
      * @param timeStamp
      */
-    public DemoModel(long timeStamp) {
+    public MachineModel(long timeStamp) {
         super(timeStamp);
     }
 }
