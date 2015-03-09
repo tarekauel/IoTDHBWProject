@@ -6,4 +6,7 @@ package de.dhbw.mannheim.iot.ia;
  * @since March 05, 2015.
  */
 public class IAHelloWorld {
+
+    org.opcfoundation.ua.builtintypes.DataValue dv;
+
 }

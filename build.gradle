@@ -21,7 +21,7 @@ project(":Model") {
 
 project(":RTA") {
     apply plugin: 'application'
-    
+
     dependencies {
         compile project(":Model")
     }
@@ -42,7 +42,9 @@ project(":IA") {
 
     dependencies {
         compile project(":Model")
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
+
     mainClassName = "de.dhbw.mannheim.iot.ia.IAHelloWorld"
 }
 
