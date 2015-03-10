@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author Michael Scheid
  * @since March 05, 2015.
  */
-public class CommunicationTest {
+public class RegisterTest {
     public static int TEST_PORT=4999;
 
     @Test
@@ -19,25 +19,23 @@ public class CommunicationTest {
             @Override
             public void run() {
 
-                //TcpServer<DemoModel,DemoModel> s =  new TcpServer<DemoModel,DemoModel>(TEST_PORT,message -> s.send(message));
+                TcpRegisterServer<DemoModel,DemoModel> s =  new TcpRegisterServer<DemoModel,DemoModel>(TEST_PORT);
 
             }
         } ).start();
 
 
        //start client
-       /* TcpClient client = new TcpClient(TEST_PORT);
+        TcpClient<DemoModel,DemoModel> client = new TcpClient<DemoModel,DemoModel>("localhost",TEST_PORT, message -> System.out.println(message));
         //send test message which test server (TestClientHandler) should return
-        client.sendMessage(new DemoModel(123456));
-        DemoModel model = (DemoModel)client.receiveMessage();
+        client.sendMessage(new DemoModel(1));
         client.close();
 
-
         //Expecting a valid message
-        Assert.assertEquals("class de.dhbw.mannheim.iot.model.DemoModel", model.getClass().toString());
+       // Assert.assertEquals("class de.dhbw.mannheim.iot.model.DemoModel", model.getClass().toString());
         //Expecting the same message as sent
-        Assert.assertEquals("123456", model.toString());
-        */
+        //Assert.assertEquals("123456", model.toString());
+
 
     }
 

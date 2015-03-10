@@ -14,10 +14,11 @@ public class UIHelloWorld {
     {
 
         //Connection to RTA_API
-        System.out.println("client started");
+       /* System.out.println("client started");
         TcpClient clientForDB = new TcpClient(API.RTA_API_PORT);
         clientForDB.sendMessage(new DemoModel(System.currentTimeMillis()));
         DemoModel model =(DemoModel) clientForDB.receiveMessage();
         clientForDB.close();
+        */
     }
 }

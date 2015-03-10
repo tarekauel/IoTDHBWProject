@@ -1,6 +1,5 @@
 package de.dhbw.mannheim.iot.mq;
 
-import de.dhbw.mannheim.iot.communication.TcpClientHandler;
 import de.dhbw.mannheim.iot.communication.TcpServer;
 import de.dhbw.mannheim.iot.model.DemoModel;
 
@@ -17,10 +16,7 @@ public class MQHelloWorld {
      */
     public static void main(String[] args)
     {
-        // this instance is  necessary to give the server the specific ClientHandler which should handle the request
-        TcpClientHandler clientHandler = MQClientHandler.getNewClientHandler();
-
-        TcpServer server = new TcpServer(MQ_PORT,clientHandler);
+        //add Server
 
     }
 }

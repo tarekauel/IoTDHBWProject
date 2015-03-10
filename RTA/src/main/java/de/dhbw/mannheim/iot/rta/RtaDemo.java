@@ -15,7 +15,7 @@ public class RtaDemo {
 
     public static void main(String[] args)
     {
-        //Connection to MQ
+        /*//Connection to MQ
         System.out.println("client started");
         TcpClient clientForMQ = new TcpClient(MQHelloWorld.MQ_PORT);
         clientForMQ.sendMessage(MachineModel.class);
@@ -28,5 +28,6 @@ public class RtaDemo {
         clientForDB.sendMessage(ERPModel.class);
         clientForDB.receiveMessage();
         clientForDB.close();
+        */
     }
 }

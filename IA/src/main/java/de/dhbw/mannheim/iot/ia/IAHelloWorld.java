@@ -18,10 +18,11 @@ public class IAHelloWorld {
     {
 
         System.out.println("client started");
-        TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
+        /*TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
         client.sendMessage(new Model(System.currentTimeMillis()));
         client.receiveMessage();
         client.close();
+        */
     }
 }
 

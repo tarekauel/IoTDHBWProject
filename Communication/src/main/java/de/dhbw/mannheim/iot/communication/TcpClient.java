@@ -10,88 +10,122 @@ import java.net.UnknownHostException;
  *
  * This class is the client of the basic communication
  * It can communicate with a TcpServer *
+ * @param <S> Type of message to send
+ * @param <R> Type of message to receive
  */
 
 
-public class TcpClient<T> {
-    public final static String SERVER_HOSTNAME = "localhost";
+
+public class TcpClient<S, R> {
+    public String serverHostname = "localhost";
     private int port = 5050;  // socket port for client comms
-    private ObjectInputStream oiStream;
     private Socket socket;
+    private Thread listenerThread;
 
 
     /**
-     * creates a client on a specific port
+     * creates a client for a specific and server_port
      *
+     * @param serverHostname
+     * @param port
      */
-    public TcpClient(int port) {
+    public TcpClient(String serverHostname, int port, MessageListener<R> messageListener) {
         this.port = port;
+        this.serverHostname = serverHostname;
         try {
-            this.socket = new Socket(SERVER_HOSTNAME, port);
-
+            this.socket = new Socket(serverHostname, port);
         } catch (UnknownHostException uhe) {
-            System.out.println("Don't know about host: " + SERVER_HOSTNAME);
+            System.out.println("Don't know about host: " + serverHostname);
             System.exit(1);
         } catch (IOException ioe) {
             System.out.println("Couldn't get I/O for the connection to: " +
-                    SERVER_HOSTNAME + ":" + port);
+                    serverHostname + ":" + port);
             System.exit(1);
         }
-
+        // start listening
+        receiveMessage(messageListener);
 
     }
 
     /**
      * sends a message to the server
-     * */
-    public T sendMessage(T model) {
+     * @param model model to send
+     */
+
+    public void sendMessage(S model) {
         try {
             OutputStream oStream = socket.getOutputStream();
             ObjectOutputStream ooStream = new ObjectOutputStream(oStream);
-            ooStream.writeObject(model);  // send serilized payload
+            ooStream.writeObject(model);
             System.out.println("Message sent to server");
         } catch (IOException ioe) {
             System.out.println("Failed to send message to: " +
-                    SERVER_HOSTNAME + ":" + port);
+                    serverHostname + ":" + port);
             System.exit(1);
         }
-        return null;
     }
 
     /**
-     * receives a message
-     * @return returns the receivedmessage
+     * receives all messages from the server and calls the interfaceMethod operation
+     * @param messageListener
      */
-    public T receiveMessage(){
-        T outModel =null;
+    private void receiveMessage(MessageListener<R> messageListener) {
 
-       try
-       {
-           if(oiStream==null) // for the first time
-           {
-               InputStream iStream  = this.socket.getInputStream();
-               oiStream = new ObjectInputStream(iStream);
-           }
-           outModel = (T) oiStream.readObject();
-           System.out.println("Received message:" + outModel.toString());
-       }
-       catch (ClassNotFoundException cne) {
-            System.out.println("Received message has an invalid type");
-       }
-       catch (IOException e) {
-           e.printStackTrace();
-       }
-        return outModel;
+        try {
+            InputStream iStream = this.socket.getInputStream();
+            listenerThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        while (true) {
+                            try {
+                                ObjectInputStream oiStream = new ObjectInputStream(iStream);
+                                R message = (R) oiStream.readObject();
+                                messageListener.operation(message);
+                            } catch (ClassCastException cce) {
+                                cce.printStackTrace();
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                if (e instanceof InterruptedIOException) {
+                                    throw (InterruptedIOException) e;
+
+                                }
+                                e.printStackTrace();
+                            }
+                        }
+
+                    } catch (InterruptedIOException iioe) {
+                        iioe.printStackTrace();
+                    }
+                }
+            };
+            listenerThread.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     /**
      * closes the connection to the server
      */
-    public void close(){
+    public void close() {
         try {
+            listenerThread.interrupt();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * ´MessageListener ist the interface, which handles received messages in the method operation
+     * @param <M>
+     */
+    interface MessageListener<M> {
+        public void operation(M message);
+    }
+
 }
