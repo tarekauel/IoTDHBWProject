@@ -22,7 +22,7 @@ project(":Model") {
 
 project(":RTA") {
     apply plugin: 'application'
-    
+
     dependencies {
         compile project(":Model")
         compile project(":Communication")
@@ -50,8 +50,9 @@ project(":IA") {
         compile project(":Model")
         compile project(":MQ")
         compile project(":Communication")
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
-    mainClassName = "de.dhbw.mannheim.iot.ia.IAHelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.ia.Random1"
 }
 
 project(":MQ") {
