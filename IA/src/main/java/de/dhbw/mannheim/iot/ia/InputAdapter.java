@@ -17,7 +17,7 @@ public abstract class InputAdapter {
 
     private void connectToMessageQueue(String ipMessageQueue, int portMessageQueue) {
         //TODO use ipMessageQueue for creating the client
-        messageQueue = new TcpClient<Model>(portMessageQueue);
+        messageQueue = new TcpClient<>(portMessageQueue);
     }
 
     protected void sendToMessageQueue(Model model) {

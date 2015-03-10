@@ -22,6 +22,10 @@ public class Random1 extends OPC {
         return Random1.NODE_NAME;
     }
 
+    protected int getNodeNameSpaceIndex() {
+        return 5;
+    }
+
     protected Model transform(DataValue dataValue) {
        return new Model(dataValue.getSourceTimestamp().getTimeInMillis());
     }

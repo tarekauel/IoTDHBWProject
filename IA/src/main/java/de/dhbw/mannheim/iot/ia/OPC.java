@@ -61,7 +61,7 @@ public abstract class OPC extends InputAdapter {
     }
 
     private void subscribe() {
-        NodeId target = new NodeId(1, getNodeName());
+        NodeId target = new NodeId(getNodeNameSpaceIndex(), getNodeName());
         Subscription subscription = new Subscription();
         MonitoredDataItem item = new MonitoredDataItem(target, Attributes.Value, MonitoringMode.Reporting);
 
@@ -78,6 +78,8 @@ public abstract class OPC extends InputAdapter {
     }
 
     protected abstract String getNodeName();
+
+    protected abstract int getNodeNameSpaceIndex();
 
     protected abstract Model transform(DataValue dataValue);
 
