@@ -12,8 +12,11 @@ import java.net.SocketException;
 
 /**
  * This class is the server of the basic communication
- * The server listens on a specific port for clients and collects registrations *
+ * The server listens on a specific port for clients and calls the lambda function for each received message
+ * @param <R> receiving message type
+ * @param <S> sending message type
  */
+
 
 public class TcpServer<R, S> {
     public int port = 5050;  // server listents on this port for clients
@@ -23,10 +26,11 @@ public class TcpServer<R, S> {
     private Socket actualClientSocket;
 
     /**
-     * creates a RegisterTCPServer on a specific port with specific handles incoming registrations
+     * creates a TCPServer on a specific port which handles incoming messages
+     * @param port serverPort
+     * @param messageListener lambda function, which is called for received messages
      *
-     * @param port
-     */
+     * */
     public TcpServer(int port, MessageListener<R> messageListener) {
         this.port = port;
         initServerSocket();
@@ -34,8 +38,10 @@ public class TcpServer<R, S> {
     }
 
 
-
-
+    /**
+     * sends a message to the current client
+     * @param message
+     */
     public void sendMessage(S message) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(actualClientSocket.getOutputStream());
@@ -47,7 +53,7 @@ public class TcpServer<R, S> {
     }
 
     /**
-     * listens for incoming messages and does the registration for them
+     * listens for incoming messages and and calls the lambda function
      */
     private void receiveMessage(MessageListener<R> messageListener) {
         // listen for and accept a client connection to serverSocket
