@@ -19,25 +19,29 @@ public class CommunicationTest {
             @Override
             public void run() {
 
-                TcpServer<DemoModel,DemoModel> s =  new TcpServer<DemoModel,DemoModel>(TEST_PORT,message -> {return message;});
+                TcpServer<DemoModel,DemoModel> s =  new TcpServer<>(TEST_PORT,message -> {return message;});
 
             }
         } ).start();
 
 
        //start client
-       /* TcpClient client = new TcpClient(TEST_PORT);
+
+
+        TcpClient<DemoModel, DemoModel> client = new TcpClient<>("localhost",TEST_PORT, message -> {
+            //Expecting a valid message
+            Assert.assertEquals("class de.dhbw.mannheim.iot.model.DemoModel", message.getClass().toString());
+            //Expecting the same message as sent
+            Assert.assertEquals("123456", message.toString());
+        });
         //send test message which test server (TestClientHandler) should return
         client.sendMessage(new DemoModel(123456));
-        DemoModel model = (DemoModel)client.receiveMessage();
         client.close();
 
 
-        //Expecting a valid message
-        Assert.assertEquals("class de.dhbw.mannheim.iot.model.DemoModel", model.getClass().toString());
-        //Expecting the same message as sent
-        Assert.assertEquals("123456", model.toString());
-        */
+
+
+
 
     }
 

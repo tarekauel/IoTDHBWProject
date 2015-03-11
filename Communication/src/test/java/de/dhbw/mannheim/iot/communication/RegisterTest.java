@@ -1,6 +1,7 @@
 package de.dhbw.mannheim.iot.communication;
 
 import de.dhbw.mannheim.iot.model.DemoModel;
+import de.dhbw.mannheim.iot.model.Model;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,16 +20,16 @@ public class RegisterTest {
             @Override
             public void run() {
 
-                TcpRegisterServer<DemoModel,DemoModel> s =  new TcpRegisterServer<DemoModel,DemoModel>(TEST_PORT);
+                TcpRegisterServer<Class<? extends Model>, DemoModel> s =  new TcpRegisterServer<>(TEST_PORT);
 
             }
         } ).start();
 
 
        //start client
-        TcpClient<DemoModel,DemoModel> client = new TcpClient<DemoModel,DemoModel>("localhost",TEST_PORT, message -> System.out.println(message));
+        TcpClient<Class<? extends Model>,DemoModel> client = new TcpClient<>("localhost",TEST_PORT, message -> System.out.println(message));
         //send test message which test server (TestClientHandler) should return
-        client.sendMessage(new DemoModel(1));
+        client.sendMessage(DemoModel.class);
         client.close();
 
         //Expecting a valid message

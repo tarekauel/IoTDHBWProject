@@ -9,18 +9,18 @@ import java.net.SocketException;
 import java.util.HashMap;
 
 /**
- * his class is the server of the basic communication
+ * this class is the server of the basic communication
  * The server listens on a specific port for clients and collects registrations *
- * @param <Class> receiving type
+ * @param <R> receiving type
  * @param <S> sending type
  */
-public class TcpRegisterServer<Class extends Model,S>
+public class TcpRegisterServer<R extends Class <? extends Model>,S>
 {
     public int port = 5050;  // server listents on this port for clients
 
     private ServerSocket serverSocket;
     private Thread listenerThread;
-    private HashMap<Class,Socket> registrations= new HashMap<Class,Socket>();
+    private HashMap<R,Socket> registrations= new HashMap<>();
 
     /**
      *  creates a RegisterTCPServer on a specific port which handles incoming registrations
@@ -37,7 +37,7 @@ public class TcpRegisterServer<Class extends Model,S>
      * @param message
      * @param registered
      */
-    public void sendMessage(S message, Class registered){
+    public void sendMessage(S message, R registered){
         registrations.forEach((k, v) -> {
             if(k.equals(registered)){ // TODO: or any superclass of
                 try {
@@ -63,7 +63,7 @@ public class TcpRegisterServer<Class extends Model,S>
                             try {
                                 Socket socket = serverSocket.accept();
                                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                                Class message = (Class) inputStream.readObject();
+                                R message = (R) inputStream.readObject();
                                 registrations.put(message, socket);
                             } catch (ClassCastException | ClassNotFoundException cce) {
                                 cce.printStackTrace();
