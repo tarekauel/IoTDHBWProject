@@ -19,7 +19,7 @@ public class CommunicationTest {
             @Override
             public void run() {
 
-                //TcpServer<DemoModel,DemoModel> s =  new TcpServer<DemoModel,DemoModel>(TEST_PORT,message -> s.send(message));
+                TcpServer<DemoModel,DemoModel> s =  new TcpServer<DemoModel,DemoModel>(TEST_PORT,message -> {return message;});
 
             }
         } ).start();

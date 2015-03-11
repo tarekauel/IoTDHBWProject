@@ -31,7 +31,7 @@ public class TcpServer<R, S> {
      * @param messageListener lambda function, which is called for received messages
      *
      * */
-    public TcpServer(int port, MessageListener<R> messageListener) {
+    public TcpServer(int port, MessageListener<R,S> messageListener) {
         this.port = port;
         initServerSocket();
         receiveMessage(messageListener);
@@ -55,7 +55,7 @@ public class TcpServer<R, S> {
     /**
      * listens for incoming messages and and calls the lambda function
      */
-    private void receiveMessage(MessageListener<R> messageListener) {
+    private void receiveMessage(MessageListener<R,S> messageListener) {
         // listen for and accept a client connection to serverSocket
         ServerSocket serverSocket = this.serverSocket;
         TcpServer actualTcpServer = this;
@@ -69,7 +69,11 @@ public class TcpServer<R, S> {
                             actualTcpServer.actualClientSocket = socket;
                             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                             R message = (R) inputStream.readObject();
-                            messageListener.operation(message);
+                            S messageBack = (S)messageListener.operation(message);
+                            if(messageBack== null){
+                                continue;
+                            }
+                            sendMessage(messageBack);
                         } catch (ClassCastException | ClassNotFoundException cce) {
                             cce.printStackTrace();
                         } catch (IOException e) {
@@ -130,12 +134,12 @@ public class TcpServer<R, S> {
     }
 
     /**
-     * ´MessageListener ist the interface, which handles received messages in the method operation
-     *
-     * @param <M>
+     * MessageListener ist the interface, which handles received messages in the method operation
+     * @param <R>
+     * @param <S>
      */
-    interface MessageListener<M> {
-        public void operation(M message);
+    interface MessageListener<R,S> {
+        public S operation(R message);
     }
 
 }
