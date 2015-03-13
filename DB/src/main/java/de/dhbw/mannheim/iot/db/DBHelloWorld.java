@@ -1,10 +1,5 @@
 package de.dhbw.mannheim.iot.db;
 
-import de.dhbw.mannheim.iot.communication.TcpClient;
-import de.dhbw.mannheim.iot.communication.TcpServer;
-import de.dhbw.mannheim.iot.model.ERPModel;
-import de.dhbw.mannheim.iot.mq.MQHelloWorld;
-
 /**
  * @author Tarek Auel
  * @since March 05, 2015.

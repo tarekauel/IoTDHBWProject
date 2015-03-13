@@ -1,8 +1,5 @@
 package de.dhbw.mannheim.iot.rta;
 
-import de.dhbw.mannheim.iot.communication.TcpServer;
-
-
 
 /**
  * Created by Michael on 06.03.2015.
