@@ -43,7 +43,7 @@ public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
     }
 
     /**
-     * MessageListener ist the interface, which handles received messages in the method operation
+     * MessageListener is the interface, which handles received messages in the method operation
      * @param <R> type of messages that will be received
      * @param <S> type of messages that will be send
      */

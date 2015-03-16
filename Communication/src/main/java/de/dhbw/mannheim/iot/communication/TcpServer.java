@@ -29,7 +29,7 @@ public abstract class TcpServer<R> {
 
     public TcpServer(int port) {
         if (port < 0 || port > 65535) {
-            log.warn("Port number of server for TcpRegisterServer is invalid: " + port);
+            log.warn("Port number of server for TcpServer is invalid: " + port);
             throw new IllegalArgumentException("Invalid port number");
         }
 
