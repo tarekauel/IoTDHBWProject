@@ -36,7 +36,7 @@ public class TcpClient<R, S> {
 
 
     /**
-     * creates a client for a specific and server_port
+     * creates a client for a specific hostname and server_port
      *
      * @param serverHostname hostname of the server
      * @param port port of the server
@@ -78,16 +78,16 @@ public class TcpClient<R, S> {
     /**
      * sends a message to the server
      * @param model model to send
-     * @return true, if message was send successfully, false if not
+     * @return true, if message was sent successfully, false if not
      */
     public boolean sendMessage(@NotNull S model) {
         log.trace("Send message: " + model);
         try {
             this.ooStream.writeObject(model);
-            log.trace("Message send to server: " + model);
+            log.trace("Message sent to server: " + model);
             return true;
         } catch (IOException e) {
-            log.warn("Failed to send object to: " + this.serverHostname + ":" + this.port +
+            log.warn("Failed to sent object to: " + this.serverHostname + ":" + this.port +
                     "Error: " + e.getMessage());
             return false;
         }
@@ -142,7 +142,7 @@ public class TcpClient<R, S> {
     }
 
     /**
-     * MessageListener ist the interface, which handles received messages in the method operation
+     * MessageListener is the interface, which handles received messages in the method operation
      * @param <M> type of messages that can be operated
      */
     interface MessageListener<M> {

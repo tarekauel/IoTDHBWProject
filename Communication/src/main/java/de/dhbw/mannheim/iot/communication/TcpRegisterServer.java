@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * this class is the server of the basic communication
- * The server listens on a specific port for clients and collects registrations *
+ * The server listens on a specific port for clients and collects registrations
  * @param <R> receiving type
  * @param <S> sending type
  */
@@ -32,7 +32,7 @@ public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model
     }
 
     /**
-     * sends a message od type S to all witch class R registered clients
+     * sends a message of type S to all with class R registered clients
      * @param message message to send
      * @return number of clients which received the message
      */
