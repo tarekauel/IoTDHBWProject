@@ -31,13 +31,15 @@ public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
     @Override
     protected void receivedMessage(R message, ObjectOutputStream os) {
         S messageBack = messageListener.operation(message);
-        try {
+
             if (messageBack != null) {
+                try {
                 os.writeObject(messageBack);
+                } catch (IOException e) {
+                    log.warn("Error: " + e.getMessage());
+                }
             }
-        } catch (IOException e) {
-            log.warn("Error: " + e.getMessage());
-        }
+
     }
 
     /**
