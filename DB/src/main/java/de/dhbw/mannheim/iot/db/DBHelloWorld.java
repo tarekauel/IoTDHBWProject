@@ -1,11 +1,5 @@
 package de.dhbw.mannheim.iot.db;
 
-import de.dhbw.mannheim.iot.communication.TcpClient;
-import de.dhbw.mannheim.iot.communication.TcpClientHandler;
-import de.dhbw.mannheim.iot.communication.TcpServer;
-import de.dhbw.mannheim.iot.model.ERPModel;
-import de.dhbw.mannheim.iot.mq.MQHelloWorld;
-
 /**
  * @author Tarek Auel
  * @since March 05, 2015.
@@ -20,16 +14,10 @@ public class DBHelloWorld {
     public static void main(String[] args)
     {
         System.out.println("client started");
-        TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
+        /*TcpClient client = new TcpClient(MQHelloWorld.MQ_PORT);
         client.sendMessage(ERPModel.class);
-        client.receiveMessage();
         client.close();
-
-
-        //DB Server
-        // this instance is  necessary to give the server the specific ClientHandler which should handle the request
-        TcpClientHandler clientHandler = DBClientHandler.getNewClientHandler();
-        TcpServer server = new TcpServer(DB_PORT,clientHandler);
+        */
     }
 }
 

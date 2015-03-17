@@ -9,15 +9,15 @@ import de.dhbw.mannheim.iot.mq.MQHelloWorld;
  */
 public abstract class InputAdapter {
 
-    private TcpClient<Model> messageQueue;
+    private TcpClient<Model, Model> messageQueue;
 
     public InputAdapter(String ipMessageQueue, int portMessageQueue) {
         connectToMessageQueue(ipMessageQueue, portMessageQueue);
     }
 
     private void connectToMessageQueue(String ipMessageQueue, int portMessageQueue) {
-        //TODO use ipMessageQueue for creating the client
-        messageQueue = new TcpClient<>(portMessageQueue);
+        //no need to listen, we only want to send
+        messageQueue = new TcpClient<>(ipMessageQueue, portMessageQueue, null);
     }
 
     protected void sendToMessageQueue(Model model) {

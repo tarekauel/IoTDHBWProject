@@ -1,113 +1,129 @@
 package de.dhbw.mannheim.iot.communication;
 
-import java.io.*;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
+import java.util.HashMap;
 
 /**
- * This class is the server of the basic communication
- * The server listens on a specific port for clients ans creates for each connection
- * a clientHandler
+ * @author Tarek Auel
+ * @since March 13, 2015.
  */
 
-public class TcpServer
-{
-    public int port = 5050;  // server listents on this port for clients
+/**
+ * abstract tcp server
+ * @param <R> type of messages that will be received
+ */
+@Slf4j
+public abstract class TcpServer<R> {
 
-    private ServerSocket serverSocket;
+    protected final ServerSocket serverSocket;
 
+    private final HashMap<ObjectOutputStream, Socket> sockets = new HashMap<>();
 
+    public TcpServer(int port) {
+        if (port < 0 || port > 65535) {
+            log.warn("Port number of server for TcpServer is invalid: " + port);
+            throw new IllegalArgumentException("Invalid port number");
+        }
 
-    /** creates a TCPServer on a specific port with specific ClientHandling */
-    public TcpServer(int port, TcpClientHandler tcpClientHandler)
-    {
-        this.port=port;
-        initServerSocket();
-        try
-        {
-            while (true)
-            {
-                // listen for and accept a client connection to serverSocket
-                Socket sock = this.serverSocket.accept();
-                //gets new clientHandler which is a clientHandler for a specific case
-                TcpClientHandler newClientHandler= tcpClientHandler.getNewClientHandler(sock);
-                newClientHandler.start();
-                System.out.println("New Client connected");
-                Thread.sleep(500); //TODO: maybe has to be changed to gain realtime
-            }
+        log.debug("Server is waiting for connections on *:" + port);
+
+        try {
+            this.serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            log.warn("Error during server socket initializing: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        catch (SecurityException se)
-        {
-            this.close();
-            System.err.println("Unable to get host address due to security.");
-            System.err.println(se.toString());
-            System.exit(1);
-        }
-        catch (IOException ioe)
-        {
-            this.close();
-            System.err.println("Unable to read data from an open socket.");
-            System.err.println(ioe.toString());
-            System.exit(1);
-        }
-        catch (InterruptedException ie) { }  // Thread sleep interrupted
-        finally
-        {
-            try
-            {
-                this.serverSocket.close();
-            }
-            catch (IOException ioe)
-            {
-                this.close();
-                System.err.println("Unable to close an open socket.");
-                System.err.println(ioe.toString());
-                System.exit(1);
-            }
-        }
+
+        receiveMessage();
     }
 
-    /** Initialize a server socket for communicating with the client. */
-    private void initServerSocket()
-    {
+    /**
+     * listens for incoming messages and does the registration for them
+     */
+    @SuppressWarnings("unchecked")
+    private void receiveMessage(){
+        (new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        if (serverSocket.isClosed()) {
+                            log.info("Sever socket is closed. Stop waiting for new connections");
+                            break;
+                        }
+                        final Socket socket = serverSocket.accept();
+                        final ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                        outputStream.flush();
 
-        try
-        {
-            this.serverSocket = new ServerSocket(port);
-            assert this.serverSocket.isBound();
-            if (this.serverSocket.isBound())
-            {
-                System.out.println("SERVER inbound data port " +
-                        this.serverSocket.getLocalPort() +
-                        " is ready and waiting for client to connect...");
+                        // thread is necessary to allow to read multiple items of one client and to
+                        // avoid block between accepting a client and the first message
+                        (new Thread() {
+                            private ObjectInputStream inputStream;
+                            private final Socket sock = socket;
+                            @Override
+                            public void run() {
+                                while (true) {
+                                    try {
+                                        if (inputStream == null) {
+                                            inputStream = new ObjectInputStream(sock.getInputStream());
+                                        }
+                                        R message = (R) inputStream.readObject();
+
+                                        sockets.put(outputStream, socket);
+                                        receivedMessage(message, outputStream);
+                                    } catch (ClassCastException | ClassNotFoundException | IOException e) {
+                                        log.warn("Error: " + e.getMessage());
+                                        if (e instanceof EOFException || e.getMessage().equals("Socket closed")) {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }).start();
+                    } catch (IOException e) {
+                        log.warn(e.getMessage());
+                    }
+                }
             }
-        }
-        catch (SocketException se)
-        {   this.close();
-            System.err.println("Unable to create socket.");
-            System.err.println(se.toString());
-            System.exit(1);
-        }
-        catch (IOException ioe)
-        {   this.close();
-            System.err.println("Unable to read data from an open socket.");
-            System.err.println(ioe.toString());
-            System.exit(1);
+        }).start();
+    }
+
+    /**
+     * Method is called for every ingoing message
+     * @param message the received message
+     * @param ooStream the object output stream (already initialized)
+     */
+    protected abstract void receivedMessage(R message, ObjectOutputStream ooStream);
+
+    /**
+     * closes the server socket
+     */
+    protected synchronized void close() {
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            log.warn(e.getMessage());
         }
     }
 
     /**
-     * closes the connection the server socket connection
-     *
-     * */
-    public void close(){
+     * Closes the socket of the stream
+     * @param oos object output stream of the socket that should be closed
+     */
+    protected synchronized final void closeSocket(@NotNull ObjectOutputStream oos) {
+        Socket s = sockets.get(oos);
         try {
-            serverSocket.close();
+            s.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage());
         }
     }
-
-
 }

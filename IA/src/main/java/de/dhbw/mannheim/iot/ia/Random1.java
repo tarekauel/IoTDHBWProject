@@ -13,6 +13,7 @@ public class Random1 extends OPC {
     }
 
     public static final String NODE_NAME = "Random1";
+    public static final int NAME_SPACE_INDEX = 5;
 
     public Random1(String ipMessageQueue, int portMessageQueue, String opcUrl) {
         super(ipMessageQueue, portMessageQueue, opcUrl);
@@ -23,7 +24,7 @@ public class Random1 extends OPC {
     }
 
     protected int getNodeNameSpaceIndex() {
-        return 5;
+        return Random1.NAME_SPACE_INDEX;
     }
 
     protected Model transform(DataValue dataValue) {
