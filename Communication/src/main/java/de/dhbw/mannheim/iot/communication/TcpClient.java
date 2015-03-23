@@ -72,9 +72,7 @@ public class TcpClient<R, S> {
         log.trace("Established connection successfully");
 
         // start listening
-        if(messageListener != null) {
-            receiveMessages(messageListener);
-        }
+        receiveMessages(messageListener);
     }
 
     /**
