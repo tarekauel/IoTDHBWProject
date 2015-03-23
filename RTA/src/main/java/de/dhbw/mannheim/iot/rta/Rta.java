@@ -12,15 +12,22 @@ import de.dhbw.mannheim.iot.model.Model;
 public class Rta {
 
     public static void main(String[] args) {
-        Rta.getInstance().registerAlgorithm(new Average());
+        Rta.getInstance(1903).registerAlgorithm(new Average());
     }
 
-    private static Rta instance = new Rta("", 0);
+    private static Rta instance;
 
     private EPServiceProvider epService;
     private TcpClient<Model, Class<? extends Model>> tcpClient;
 
     public static Rta getInstance() {
+        if (instance == null) throw new IllegalArgumentException("Instance is not built");
+        return instance;
+    }
+
+    public synchronized static Rta getInstance(int port) {
+        if (instance != null) throw new IllegalArgumentException("Instance is already built");
+        instance = new Rta("localhost", port);
         return instance;
     }
 
