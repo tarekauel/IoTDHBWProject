@@ -65,10 +65,12 @@ project(":IA") {
     dependencies {
         compile project(":Shared")
         compile project(":Model")
+        compile project(":MQ")
+        compile project(":Communication")
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 
-    mainClassName = "de.dhbw.mannheim.iot.ia.IAHelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.ia.Random1"
 }
 
 project(":MQ") {
