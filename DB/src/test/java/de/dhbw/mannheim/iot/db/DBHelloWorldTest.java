@@ -8,7 +8,7 @@ import org.junit.Test;
  * @since March 05, 2015.
  */
 public class DBHelloWorldTest {
-    
+
     @Test
     public void dummyTest() {
         Assert.assertEquals(1,1);
