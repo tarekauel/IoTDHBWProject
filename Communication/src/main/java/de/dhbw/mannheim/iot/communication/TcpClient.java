@@ -147,7 +147,7 @@ public class TcpClient<R, S> {
      * MessageListener is the interface, which handles received messages in the method operation
      * @param <M> type of messages that can be operated
      */
-    interface MessageListener<M> {
+    public interface MessageListener<M> {
         public void operation(@NotNull M message);
     }
 

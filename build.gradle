@@ -43,6 +43,7 @@ project(":RTA") {
         compile project(":Communication")
         compile project(":MQ")
         compile project(":DB")
+        compile 'com.espertech:esper:5.2.0'
     }
     mainClassName = "de.dhbw.mannheim.iot.rta.RtaDemo"
 }
