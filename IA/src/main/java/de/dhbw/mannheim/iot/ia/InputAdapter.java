@@ -2,7 +2,6 @@ package de.dhbw.mannheim.iot.ia;
 
 import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.model.Model;
-import de.dhbw.mannheim.iot.mq.MQHelloWorld;
 
 /**
  * Created by Marc on 10.03.2015.

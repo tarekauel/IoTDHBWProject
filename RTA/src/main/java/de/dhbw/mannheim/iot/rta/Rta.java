@@ -5,6 +5,7 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.model.Model;
+import de.dhbw.mannheim.iot.mq.MessageQueue;
 
 /**
  * Created by everybody on 23.03.2015.
@@ -12,7 +13,7 @@ import de.dhbw.mannheim.iot.model.Model;
 public class Rta {
 
     public static void main(String[] args) {
-        Rta.getInstance(1903).registerAlgorithm(new Average());
+        Rta.getInstance(MessageQueue.OUTGOING_PORT).registerAlgorithm(new Average());
     }
 
     private static Rta instance;

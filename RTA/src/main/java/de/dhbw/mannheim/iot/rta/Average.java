@@ -19,7 +19,7 @@ public class Average implements Algorithm {
 
     public ArrayList<String> getQueries() {
         ArrayList<String> queries = new ArrayList<>();
-        queries.add("select avg(timeStamp) from de.dhbw.mannheim.iot.model.Model.win:time(1 sec)");
+        queries.add("select avg(timeStamp) from de.dhbw.mannheim.iot.model.Model.win:time(30 sec)");
         return queries;
     }
 }
