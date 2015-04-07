@@ -71,7 +71,7 @@ project(":IA") {
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 
-    mainClassName = "de.dhbw.mannheim.iot.ia.Random1"
+    mainClassName = "de.dhbw.mannheim.iot.ia.NFC"
 }
 
 project(":MQ") {
