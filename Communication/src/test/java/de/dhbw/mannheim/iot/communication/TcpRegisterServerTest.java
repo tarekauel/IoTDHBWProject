@@ -86,7 +86,7 @@ public class TcpRegisterServerTest {
         new TcpClient<DemoModel, Class<? extends DemoModel>>("localhost",PORT,listener).sendMessage(DemoModel.class);
         new TcpClient<DemoModel, Class<? extends DemoModel>>("localhost",PORT,listener).sendMessage(DemoModel.class);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         receiver = server.sendMessage(testModel);
         Assert.assertEquals(3,receiver);
@@ -97,7 +97,7 @@ public class TcpRegisterServerTest {
         receiver = server.sendMessage(testModel);
         Assert.assertEquals(3,receiver);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         Assert.assertEquals(18,counter);
 

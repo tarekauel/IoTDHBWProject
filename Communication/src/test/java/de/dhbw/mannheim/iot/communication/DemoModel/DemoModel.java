@@ -9,12 +9,11 @@ import java.util.Objects;
  * @author Tarek Auel
  * @since March 13, 2015.
  */
-public class DemoModel extends Model {
+public class DemoModel implements Model {
 
     private final String payload;
 
     public DemoModel(String payload) {
-        super(new Date().getTime());
         this.payload = payload;
     }
 

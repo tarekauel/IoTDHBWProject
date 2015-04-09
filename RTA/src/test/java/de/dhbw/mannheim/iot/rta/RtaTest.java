@@ -4,6 +4,7 @@ import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
 import de.dhbw.mannheim.iot.communication.TcpServer;
 import de.dhbw.mannheim.iot.communication.TcpServerSendAndResponse;
 import de.dhbw.mannheim.iot.model.Model;
+import de.dhbw.mannheim.iot.model.ModelFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,10 +30,10 @@ public class RtaTest {
         Rta rta = Rta.getInstance(TEST_PORT);
         rta.registerAlgorithm(new Average());
 
-        server.sendMessage(new Model(1));
+        server.sendMessage(ModelFactory.getModelInstance(1));
         Thread.sleep(1100);
-        server.sendMessage(new Model(2));
+        server.sendMessage(ModelFactory.getModelInstance(2));
         Thread.sleep(300);
-        server.sendMessage(new Model(3));
+        server.sendMessage(ModelFactory.getModelInstance(3));
     }
 }
