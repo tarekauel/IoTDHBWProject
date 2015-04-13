@@ -17,11 +17,6 @@ import java.io.IOException;
 @Slf4j
 public abstract class RabbitMQ extends InputAdapter {
 
-    public static void main(String[] args) {
-        new ReportQueue("localhost", MessageQueue.INGOING_PORT, "localhost");
-        new MachineOrderQueue("localhost", MessageQueue.INGOING_PORT, "localhost");
-    }
-
     public RabbitMQ(String ipMessageQueue, int portMessageQueue, String ipRabbitMQ) {
         super(ipMessageQueue, portMessageQueue);
         connectToQueue(ipRabbitMQ);

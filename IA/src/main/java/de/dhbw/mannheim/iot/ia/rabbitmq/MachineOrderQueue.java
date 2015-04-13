@@ -6,11 +6,16 @@ import de.dhbw.mannheim.erpsim.ErpSimulator;
 import de.dhbw.mannheim.erpsim.model.MachineOrder;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.ModelFactory;
+import de.dhbw.mannheim.iot.mq.MessageQueue;
 
 /**
  * Created by D059166 on 09.04.2015.
  */
 public class MachineOrderQueue extends RabbitMQ {
+
+    public static void main(String[] args) {
+        new MachineOrderQueue("localhost", MessageQueue.INGOING_PORT, "localhost");
+    }
 
     public MachineOrderQueue(String ipMessageQueue, int portMessageQueue, String ipRabbitMQ) {
         super(ipMessageQueue, portMessageQueue, ipRabbitMQ);

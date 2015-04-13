@@ -2,5 +2,5 @@ rootProject.name = 'IoTProjekt'
 
 include 'Model','RTA','IA','DB','UI','MQ','Communication'
 
-include 'Shared'
+include 'Shared', 'Starter'
 

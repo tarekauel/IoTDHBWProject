@@ -26,6 +26,14 @@ public class Report extends Model {
         speedDrillerRPM = r.getSpeedDrillerRPM();
     }
 
+    public Report(String machineOrderId, Timestamp startTime, ArrayList<Timestamp> passedLightBarrier, double speedShaperRPM, double speedDrillerRPM) {
+        this.machineOrderId = machineOrderId;
+        this.startTime = startTime;
+        this.passedLightBarrier = passedLightBarrier;
+        this.speedShaperRPM = speedShaperRPM;
+        this.speedDrillerRPM = speedDrillerRPM;
+    }
+
     public String getMachineOrderId() {
         return machineOrderId;
     }
