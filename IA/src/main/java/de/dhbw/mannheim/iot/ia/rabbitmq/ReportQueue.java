@@ -8,7 +8,7 @@ import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.ModelFactory;
 
 /**
- * Created by D059166 on 09.04.2015.
+ * @author Marc Becker
  */
 public class ReportQueue extends RabbitMQ {
 
@@ -26,5 +26,4 @@ public class ReportQueue extends RabbitMQ {
         Report report = (Report) new XStream().fromXML(new String(delivery.getBody()));
         return ModelFactory.getModelInstance(report);
     }
-
 }

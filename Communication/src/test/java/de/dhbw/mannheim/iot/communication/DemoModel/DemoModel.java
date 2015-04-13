@@ -2,14 +2,13 @@ package de.dhbw.mannheim.iot.communication.DemoModel;
 
 import de.dhbw.mannheim.iot.model.Model;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author Tarek Auel
  * @since March 13, 2015.
  */
-public class DemoModel implements Model {
+public class DemoModel extends Model {
 
     private final String payload;
 

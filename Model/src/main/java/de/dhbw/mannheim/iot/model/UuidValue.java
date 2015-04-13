@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Created by D059166 on 09.04.2015.
  */
-public class UuidValue implements Model {
+public class UuidValue extends Model {
 
     private UUID uuid;
 

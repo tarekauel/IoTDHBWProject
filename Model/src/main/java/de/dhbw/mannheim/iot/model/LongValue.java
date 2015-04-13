@@ -3,7 +3,7 @@ package de.dhbw.mannheim.iot.model;
 /**
  * Created by D059166 on 09.04.2015.
  */
-public class LongValue implements Model {
+public class LongValue extends Model {
 
     private long value;
 

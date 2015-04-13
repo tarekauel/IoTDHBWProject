@@ -6,6 +6,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
 import de.dhbw.mannheim.iot.ia.InputAdapter;
 import de.dhbw.mannheim.iot.model.Model;
+import de.dhbw.mannheim.iot.mq.MessageQueue;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -15,6 +16,11 @@ import java.io.IOException;
  */
 @Slf4j
 public abstract class RabbitMQ extends InputAdapter {
+
+    public static void main(String[] args) {
+        new ReportQueue("localhost", MessageQueue.INGOING_PORT, "localhost");
+        new MachineOrderQueue("localhost", MessageQueue.INGOING_PORT, "localhost");
+    }
 
     public RabbitMQ(String ipMessageQueue, int portMessageQueue, String ipRabbitMQ) {
         super(ipMessageQueue, portMessageQueue);
@@ -29,11 +35,11 @@ public abstract class RabbitMQ extends InputAdapter {
 
             Channel channel = connection.createChannel();
             channel.exchangeDeclare(getExchangeName(), "fanout");
-            log.info("Connected to RabbitMQ at " + ipRabbitMQ + " and ecchange " + getExchangeName());
+            log.info("Connected to RabbitMQ at " + ipRabbitMQ + " and exchange " + getExchangeName());
 
             String queueName = channel.queueDeclare().getQueue();
             channel.queueBind(queueName, getExchangeName(), "");
-            log.info("Successfully bound to queue " + queueName + " for exchange" + getExchangeName());
+            log.info("Successfully bound to queue " + queueName + " for exchange " + getExchangeName());
 
             QueueingConsumer consumer = new QueueingConsumer(channel);
             channel.basicConsume(queueName, true, consumer);

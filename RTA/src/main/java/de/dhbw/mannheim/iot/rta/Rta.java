@@ -13,7 +13,8 @@ import de.dhbw.mannheim.iot.mq.MessageQueue;
 public class Rta {
 
     public static void main(String[] args) {
-        Rta.getInstance(MessageQueue.OUTGOING_PORT).registerAlgorithm(new Average());
+        //Rta.getInstance(MessageQueue.OUTGOING_PORT).registerAlgorithm(new Average());
+        Rta.getInstance(MessageQueue.OUTGOING_PORT).registerAlgorithm(new AverageShaperSpeed());
     }
 
     private static Rta instance;

@@ -4,7 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import de.dhbw.mannheim.iot.ia.InputAdapter;
 import de.dhbw.mannheim.iot.model.Model;
-import de.dhbw.mannheim.iot.mq.MessageQueue;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

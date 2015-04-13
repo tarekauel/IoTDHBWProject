@@ -3,15 +3,13 @@ package de.dhbw.mannheim.iot.db;
 
 import com.google.gson.*;
 import com.mongodb.MongoTimeoutException;
-import de.caluga.morphium.Morphium;
 import de.caluga.morphium.MorphiumConfig;
 import de.caluga.morphium.MorphiumSingleton;
 import de.caluga.morphium.query.Query;
-import de.dhbw.mannheim.iot.model.DemoModel;
-import org.apache.log4j.Logger;
+import de.dhbw.mannheim.iot.model.Model;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +25,14 @@ import java.util.Map;
  * database wrapper for connection with mongoDB, using POJO-Mapper "morphium"
  * @param <T> the top level type that should be stored, e.g. Model
  */
+@Slf4j
 public class DBHandler<T> {
 
-    private static Gson gson = new GsonBuilder().create();
+    public static void main(String[] args) throws Exception {
+        new DBHandler<Model>();
+    }
 
-    // TODO: logger okay?
-    private static Logger logger = Logger.getLogger(DBHandler.class);
+    private static Gson gson = new GsonBuilder().create();
 
     /**
      * Default constructor. Initialize the database with the title "IoT"
@@ -57,7 +57,7 @@ public class DBHandler<T> {
             MorphiumSingleton.setConfig(cfg);
 
         } catch (UnknownHostException | MongoTimeoutException  e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             throw e;
         }
     }
@@ -104,7 +104,7 @@ public class DBHandler<T> {
             return query.asList();
         } catch (RuntimeException e) {
             // is thrown if a field doesn't exist
-            logger.warn(e.getMessage());
+            log.warn(e.getMessage());
 
             //maybe this should be double checked
             throw new IllegalArgumentException("Property doesn't exist or is a reference");
@@ -136,7 +136,7 @@ public class DBHandler<T> {
                 // parse embedded objects in embedded objects
                 query = addEmbeddedObjectsToQuery(query, prefix + "." + jsonEntry.getKey(), jsonEntry.getValue().getAsJsonObject());
             } else {
-                logger.warn("Unsupported type of json");
+                log.warn("Unsupported type of json");
             }
         }
         return query;

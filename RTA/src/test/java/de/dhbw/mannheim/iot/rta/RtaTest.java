@@ -1,15 +1,10 @@
 package de.dhbw.mannheim.iot.rta;
 
 import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
-import de.dhbw.mannheim.iot.communication.TcpServer;
-import de.dhbw.mannheim.iot.communication.TcpServerSendAndResponse;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.ModelFactory;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.Date;
 
 /**
  * @author Tarek Auel
