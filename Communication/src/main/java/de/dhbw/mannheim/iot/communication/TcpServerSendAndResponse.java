@@ -33,8 +33,9 @@ public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
         S messageBack = messageListener.operation(message);
 
             if (messageBack != null) {
+                log.debug("Received message " + message);
                 try {
-                os.writeObject(messageBack);
+                    os.writeObject(messageBack);
                 } catch (IOException e) {
                     log.warn("Error: " + e.getMessage());
                 }
@@ -47,7 +48,7 @@ public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
      * @param <R> type of messages that will be received
      * @param <S> type of messages that will be send
      */
-    interface MessageListener<R,S> {
+    public interface MessageListener<R,S> {
         public S operation(R message);
     }
 

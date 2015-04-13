@@ -38,6 +38,7 @@ public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model
      */
     public synchronized int sendMessage(@NotNull S message){
         int sendMessageCount = 0;
+        ArrayList<ObjectOutputStream> streamsToClose = new ArrayList<>();
         for (Map.Entry<R,ArrayList<ObjectOutputStream>> entry : registrations.entrySet()) {
             R clazz = entry.getKey();
             if (clazz.isAssignableFrom(message.getClass())) {
@@ -48,11 +49,20 @@ public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model
                         ooStream.writeObject(message);
                         ++sendMessageCount;
                     } catch (IOException e) {
+                        streamsToClose.add(ooStream);
                         e.printStackTrace();
                     }
                 }
             }
         }
+
+        for (ObjectOutputStream stream : streamsToClose) {
+            closeSocket(stream);
+            for (Map.Entry<R, ArrayList<ObjectOutputStream>> entry : registrations.entrySet()) {
+                entry.getValue().remove(stream);
+            }
+        }
+
         return sendMessageCount;
     }
 
@@ -62,6 +72,7 @@ public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model
         if (objectOutputStreams == null) {
             objectOutputStreams = new ArrayList<>();
             registrations.put(message, objectOutputStreams);
+            log.debug("Consumer connected to " + message);
         }
         objectOutputStreams.add(os);
     }

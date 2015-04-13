@@ -43,8 +43,9 @@ project(":RTA") {
         compile project(":Communication")
         compile project(":MQ")
         compile project(":DB")
+        compile 'com.espertech:esper:5.2.0'
     }
-    mainClassName = "de.dhbw.mannheim.iot.rta.RtaDemo"
+    mainClassName = "de.dhbw.mannheim.iot.rta.Rta"
 }
 
 project(":DB") {
@@ -82,7 +83,7 @@ project(":MQ") {
         compile project(":Communication")
 
     }
-    mainClassName = "de.dhbw.mannheim.iot.mq.MQHelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.mq.MessageQueue"
 }
 
 project(":UI") {
