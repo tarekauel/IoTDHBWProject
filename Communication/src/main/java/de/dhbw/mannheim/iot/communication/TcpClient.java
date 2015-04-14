@@ -2,6 +2,7 @@ package de.dhbw.mannheim.iot.communication;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -82,16 +83,21 @@ public class TcpClient<R, S> {
      * @param model model to send
      * @return true, if message was sent successfully, false if not
      */
-    public boolean sendMessage(@NotNull S model) {
+    public boolean sendMessage(@Nullable S model) {
         log.trace("Send message: " + model);
-        try {
-            this.ooStream.writeObject(model);
-            log.trace("Message sent to server: " + model);
+        if (model == null) {
+            log.trace("Ignore null message");
             return true;
-        } catch (IOException e) {
-            log.warn("Failed to sent object to: " + this.serverHostname + ":" + this.port +
-                    "Error: " + e.getMessage());
-            return false;
+        } else {
+            try {
+                this.ooStream.writeObject(model);
+                log.trace("Message sent to server: " + model);
+                return true;
+            } catch (IOException e) {
+                log.warn("Failed to sent object to: " + this.serverHostname + ":" + this.port +
+                        "Error: " + e.getMessage());
+                return false;
+            }
         }
     }
 

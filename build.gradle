@@ -84,7 +84,7 @@ project(":IA") {
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 
-    mainClassName = "de.dhbw.mannheim.iot.ia.rabbitmq.RabbitMQ"
+    mainClassName = "de.dhbw.mannheim.iot.ia.opc.Phototransistor"
 }
 
 project(":MQ") {
