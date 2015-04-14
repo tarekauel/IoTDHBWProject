@@ -46,7 +46,7 @@ public class CollectReport implements SimpleAlgorithm{
             ArrayList<Timestamp> passedLightBarriers= new ArrayList<>();
 
             //add only timestamps of parts coming out of the light barrier
-            phototransistors.forEach((key,value) -> passedLightBarriers.add(value[1].getTIMESTAMP()));
+            phototransistors.forEach((key,value) -> passedLightBarriers.add(value[0].getTIMESTAMP().compareTo(value[0].getTIMESTAMP())> 0 && value[1].isVALUE()  ? value[1].getTIMESTAMP() : value[0].getTIMESTAMP()));
             Timestamp startTimeStamp= passedLightBarriers.remove(0);
 
             //create speed variables
