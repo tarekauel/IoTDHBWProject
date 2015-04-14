@@ -14,7 +14,7 @@ import java.util.*;
  * Created by Michael on 14.04.2015.
  */
 @Slf4j
-public class CollectReport implements SimpleAlgorithm{
+public class CollectReport implements SimpleAlgorithm {
 
     private LinkedList<String> machineOrderIds = new LinkedList<>();
     private HashMap<String, ArrayList<Phototransistor>> phototransistors= new HashMap<>();
@@ -64,6 +64,7 @@ public class CollectReport implements SimpleAlgorithm{
                 //create report
                 log.info("Report with machineOrderId: "+nextMachineOrderId+ " created");
                 Report report = new Report(nextMachineOrderId, startTimeStamp, passedLightBarriers, speedShaper, speedDriller);
+                Rta.getInstance().provideResult(report);
             }
         }
 

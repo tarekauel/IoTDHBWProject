@@ -18,6 +18,7 @@ public class Rta {
 
     public static void main(String[] args) {
         Rta.getInstance(MessageQueue.OUTGOING_PORT).registerAlgorithm(new AverageShaperSpeed());
+        Rta.getInstance().registerAlgorithm(new CollectReport());
         Rta.getInstance().registerAlgorithm(new DifferenceRuntime());
         Rta.getInstance().registerAlgorithm(new AverageRuntime());
     }
