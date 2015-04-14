@@ -3,6 +3,7 @@ package de.dhbw.mannheim.iot.rta;
 import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.db.DBStarter;
 import de.dhbw.mannheim.iot.db.Request;
+import de.dhbw.mannheim.iot.model.DifferenceRuntimeResult;
 import de.dhbw.mannheim.iot.model.MachineOrder;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.Report;
@@ -18,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class DifferenceRuntime implements SimpleAlgorithm {
 
-    private HashMap<String, Report>cachedReports = new HashMap<>();
+    private HashMap<String, Report> cachedReports = new HashMap<>();
 
     private final int speedFactor = 10;
 
@@ -27,7 +28,9 @@ public class DifferenceRuntime implements SimpleAlgorithm {
         Report r = cachedReports.get(mo.getId());
         long runtime = r.getPassedLightBarrier().get(r.getPassedLightBarrier().size() - 1).getTime() - r.getStartTime().getTime();
         long expectedRuntime = (long) (mo.getPlannedSeconds() / speedFactor);
-        log.info(mo.getId() + ": Expected Runtime " +  expectedRuntime + "ms actual runtime: " + runtime + "ms difference: " + (runtime - expectedRuntime) + "ms");
+        long difference = runtime - expectedRuntime;
+        log.info(mo.getId() + ": Expected Runtime " +  expectedRuntime + "ms actual runtime: " + runtime + "ms difference: " + difference + "ms");
+        Rta.getInstance().provideResult(new DifferenceRuntimeResult(mo.getId(), expectedRuntime, runtime, difference));
     });
 
     @Override
