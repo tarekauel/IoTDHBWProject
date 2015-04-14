@@ -17,15 +17,15 @@ public class Phototransistor extends Model {
         this.NODE = node;
     }
 
-    public boolean isVALUE() {
+    public boolean getValue() {
         return VALUE;
     }
 
-    public Timestamp getTIMESTAMP() {
+    public Timestamp getTimestamp() {
         return TIMESTAMP;
     }
 
-    public String getNODE() {
+    public String getNode() {
         return NODE;
     }
 }

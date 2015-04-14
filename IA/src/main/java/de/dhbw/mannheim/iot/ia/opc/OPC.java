@@ -39,11 +39,12 @@ public abstract class OPC extends InputAdapter {
         identity.setApplicationDescription(appDescription);
         client.setApplicationIdentity(identity);
     }
-
+    public final String NODE_NAME;
     private UaClient client;
 
-    public OPC (String ipMessageQueue, int portMessageQueue, String opcUrl) {
+    public OPC (String ipMessageQueue, int portMessageQueue, String opcUrl, String nodeName) {
         super(ipMessageQueue, portMessageQueue);
+        NODE_NAME = nodeName;
         connectToMachine(opcUrl);
     }
 
@@ -61,7 +62,7 @@ public abstract class OPC extends InputAdapter {
     }
 
     private void subscribe() {
-        NodeId target = new NodeId(getNodeNameSpaceIndex(), getNodeName());
+        NodeId target = new NodeId(getNodeNameSpaceIndex(), NODE_NAME);
         Subscription subscription = new Subscription();
         MonitoredDataItem item = new MonitoredDataItem(target, Attributes.Value, MonitoringMode.Reporting);
 
@@ -69,7 +70,7 @@ public abstract class OPC extends InputAdapter {
             sendToMessageQueue(transform(dataValue));
         });
 
-        log.info("Subscribed to node " + getNodeName());
+        log.info("Subscribed to node " + NODE_NAME);
 
         try {
             subscription.addItem(item);
@@ -78,8 +79,6 @@ public abstract class OPC extends InputAdapter {
             log.error("Couldn't subscribe to node: " + e.getMessage());
         }
     }
-
-    protected abstract String getNodeName();
 
     protected abstract int getNodeNameSpaceIndex();
 
