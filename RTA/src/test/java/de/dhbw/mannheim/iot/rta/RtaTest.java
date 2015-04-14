@@ -23,7 +23,7 @@ public class RtaTest {
     @Test
     public void test() throws InterruptedException {
         Rta rta = Rta.getInstance(TEST_PORT);
-        rta.registerAlgorithm(new Average());
+        rta.registerAlgorithm(new AverageShaperSpeed());
 
         server.sendMessage(ModelFactory.getModelInstance(1));
         Thread.sleep(1100);
