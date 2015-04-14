@@ -4,7 +4,6 @@ import de.dhbw.mannheim.iot.model.MachineOrder;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.Phototransistor;
 import de.dhbw.mannheim.iot.model.Report;
-import jdk.nashorn.internal.objects.NativeArray;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
@@ -27,19 +26,19 @@ public class CollectReport implements SimpleAlgorithm{
         }
         if(model instanceof Phototransistor) {
             Phototransistor phototransistor = (Phototransistor) model;
-            if (!phototransistors.containsKey(phototransistor.getNODE())) {
+            if (!phototransistors.containsKey(phototransistor.getNode())) {
                 //First phototransistorState received
                 ArrayList<Phototransistor> photostransistorState = new ArrayList<>();
                 photostransistorState.add(phototransistor);
-                phototransistors.put(phototransistor.getNODE(), photostransistorState);
+                phototransistors.put(phototransistor.getNode(), photostransistorState);
             } else {
                 //Second phototransistorState received
-                ArrayList<Phototransistor> photostransistorState = phototransistors.get(phototransistor.getNODE());
+                ArrayList<Phototransistor> photostransistorState = phototransistors.get(phototransistor.getNode());
                 photostransistorState.add(phototransistor);
             }
 
 
-            if (phototransistor.getNODE().equals("SPSData.S7-1200.Inputs.Phototransistor_Conveyer_BeltSwap")){
+            if (phototransistor.getNode().equals("SPSData.S7-1200.Inputs.Phototransistor_Conveyer_BeltSwap")){
                 //is last light barrier
                 //create ArrayList of passed light barriers
                 ArrayList<Timestamp> passedLightBarriers = new ArrayList<>();
@@ -47,8 +46,8 @@ public class CollectReport implements SimpleAlgorithm{
                 //add only timestamps of parts coming out of the light barrier
                 for(String key : phototransistors.keySet()) {
                     ArrayList<Phototransistor> photoTransistorStates =  phototransistors.get(key);
-                    if (photoTransistorStates.get(1).isVALUE()) {
-                        passedLightBarriers.add(photoTransistorStates.get(1).getTIMESTAMP());
+                    if (photoTransistorStates.get(1).getValue()) {
+                        passedLightBarriers.add(photoTransistorStates.get(1).getTimestamp());
                         photoTransistorStates.remove(0);
                         photoTransistorStates.remove(1);
                     }else{
