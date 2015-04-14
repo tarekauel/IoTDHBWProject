@@ -1,6 +1,7 @@
-package de.dhbw.mannheim.iot.ia;
+package de.dhbw.mannheim.iot.ia.opc;
 
 import de.dhbw.mannheim.iot.model.Model;
+import de.dhbw.mannheim.iot.model.ModelFactory;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
 import lombok.extern.slf4j.Slf4j;
 import org.opcfoundation.ua.builtintypes.DataValue;
@@ -31,8 +32,8 @@ public class Random1 extends OPC {
     }
 
     protected Model transform(DataValue dataValue) {
-       log.trace("Data value:" + ((long) dataValue.getValue().doubleValue() * 100));
-       return new Model((long) (dataValue.getValue().doubleValue() * 100));
+       log.trace("Transforming to Model: " + ((long) dataValue.getValue().doubleValue() * 100));
+       return ModelFactory.getModelInstance((long) dataValue.getValue().doubleValue() * 100);
     }
 
 }

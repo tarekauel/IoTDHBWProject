@@ -1,4 +1,4 @@
-package de.dhbw.mannheim.iot.ia;
+package de.dhbw.mannheim.iot.ia.opc;
 
 import com.prosysopc.ua.ApplicationIdentity;
 import com.prosysopc.ua.ServiceException;
@@ -6,8 +6,9 @@ import com.prosysopc.ua.StatusException;
 import com.prosysopc.ua.client.MonitoredDataItem;
 import com.prosysopc.ua.client.Subscription;
 import com.prosysopc.ua.client.UaClient;
+import de.dhbw.mannheim.iot.ia.InputAdapter;
 import de.dhbw.mannheim.iot.model.Model;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.opcfoundation.ua.builtintypes.DataValue;
 import org.opcfoundation.ua.builtintypes.LocalizedText;
 import org.opcfoundation.ua.builtintypes.NodeId;
@@ -23,9 +24,8 @@ import java.util.Locale;
 /**
  * Created by Marc on 10.03.2015.
  */
+@Slf4j
 public abstract class OPC extends InputAdapter {
-
-    private static final Logger logger = Logger.getLogger(OPC.class);
 
     private static void initializeClient(UaClient client) {
         ApplicationDescription appDescription = new ApplicationDescription();
@@ -50,13 +50,13 @@ public abstract class OPC extends InputAdapter {
     private void connectToMachine(String opcUrl) {
         try {
             client = new UaClient(opcUrl);
-            //TODO do we care about security?
             client.setSecurityMode(SecurityMode.NONE);
             OPC.initializeClient(client);
             client.connect();
+            log.info("Connected to machine at " + opcUrl);
             subscribe();
         } catch (URISyntaxException | ServiceException e) {
-            logger.error(e.getMessage());
+            log.error("Couldn't connect to machine: " + e.getMessage());
         }
     }
 
@@ -69,11 +69,13 @@ public abstract class OPC extends InputAdapter {
             sendToMessageQueue(transform(dataValue));
         });
 
+        log.info("Subscribed to node " + getNodeName());
+
         try {
             subscription.addItem(item);
             client.addSubscription(subscription);
         } catch (ServiceException | StatusException e) {
-            logger.error(e.getMessage());
+            log.error("Couldn't subscribe to node: " + e.getMessage());
         }
     }
 

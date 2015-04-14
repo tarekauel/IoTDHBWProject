@@ -8,6 +8,12 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            url "https://raw.github.com/tarekauel/ioterpsimulator/mvn-repo/"
+        }
+        maven {
+            url "https://raw.github.com/tarekauel/iotassemblylinesim/mvn-repo/"
+        }
     }
 
     dependencies {
@@ -21,7 +27,11 @@ subprojects {
         compile 'log4j:log4j:1.2.14'
 
         compile 'org.jetbrains:annotations:13.0'
+        compile 'de.caluga:morphium:2.2.16'
+        compile 'de.dhbw.mannheim:erpsim:0.1-SNAPSHOT'
+        compile 'de.dhbw.mannheim:assemblylinesim:0.1-SNAPSHOT'
 
+        compile 'org.jetbrains:annotations:13.0'
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
 }
@@ -29,6 +39,7 @@ subprojects {
 project(":Shared")
 
 project(":Model") {
+
     dependencies {
         compile project(":Shared")
     }
@@ -57,7 +68,7 @@ project(":DB") {
         compile project(":IA")
         compile project(":MQ")
     }
-    mainClassName = "de.dhbw.mannheim.iot.db.DBHelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.db.DBStarter"
 }
 
 project(":IA") {
@@ -68,10 +79,12 @@ project(":IA") {
         compile project(":Model")
         compile project(":MQ")
         compile project(":Communication")
+        compile 'com.rabbitmq:amqp-client:3.5.1'
+        compile 'xstream:xstream:1.2.2'
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 
-    mainClassName = "de.dhbw.mannheim.iot.ia.Random1"
+    mainClassName = "de.dhbw.mannheim.iot.ia.rabbitmq.RabbitMQ"
 }
 
 project(":MQ") {
@@ -103,4 +116,17 @@ project(":Communication") {
         compile project(":Shared")
         compile project(":Model")
     }
+}
+
+project(":Starter") {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(":MQ")
+        compile project(":DB")
+        compile project(":RTA")
+        compile project(":IA")
+    }
+
+    mainClassName = "de.dhbw.mannheim.iot.starter.Starter"
 }
