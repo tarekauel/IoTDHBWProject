@@ -5,56 +5,67 @@ import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.Phototransistor;
 import de.dhbw.mannheim.iot.model.Report;
 import jdk.nashorn.internal.objects.NativeArray;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
  * Created by Michael on 14.04.2015.
  */
+@Slf4j
 public class CollectReport implements SimpleAlgorithm{
 
-    private String nextMachineOrderId="";
-    private int receivedPhotoTransistorsCnt=0;
-    private HashMap<String, Phototransistor[]> phototransistors= new HashMap<>();
+    private LinkedList<String> machineOrderIds = new LinkedList<>();
+    private HashMap<String, ArrayList<Phototransistor>> phototransistors= new HashMap<>();
 
     @Override
     public void receive(Model model) {
-        receivedPhotoTransistorsCnt++;
         if(model instanceof MachineOrder){
-            nextMachineOrderId = ((MachineOrder) model).getId();
+            machineOrderIds.offer(((MachineOrder) model).getId());
         }
-        if(model instanceof Phototransistor){
-            Phototransistor phototransistor= (Phototransistor)model;
-            if(!phototransistors.containsKey(phototransistor.getNODE())){
+        if(model instanceof Phototransistor) {
+            Phototransistor phototransistor = (Phototransistor) model;
+            if (!phototransistors.containsKey(phototransistor.getNODE())) {
                 //First phototransistorState received
-                Phototransistor[] photostransistorState= new Phototransistor[2];
-                photostransistorState[0]= phototransistor;
-                phototransistors.put(phototransistor.getNODE(),photostransistorState);
-            }else{
+                ArrayList<Phototransistor> photostransistorState = new ArrayList<>();
+                photostransistorState.add(phototransistor);
+                phototransistors.put(phototransistor.getNODE(), photostransistorState);
+            } else {
                 //Second phototransistorState received
-                Phototransistor[] photostransistorState = phototransistors.get(phototransistor.getNODE());
-                photostransistorState[1]=phototransistor;
+                ArrayList<Phototransistor> photostransistorState = phototransistors.get(phototransistor.getNODE());
+                photostransistorState.add(phototransistor);
             }
-        }
 
-        if(receivedPhotoTransistorsCnt>=10){
-            //create ArrayList of passed light barriers
-            ArrayList<Timestamp> passedLightBarriers= new ArrayList<>();
 
-            //add only timestamps of parts coming out of the light barrier
-            phototransistors.forEach((key,value) -> passedLightBarriers.add(value[0].getTIMESTAMP().compareTo(value[0].getTIMESTAMP())> 0 && value[1].isVALUE()  ? value[1].getTIMESTAMP() : value[0].getTIMESTAMP()));
-            Timestamp startTimeStamp= passedLightBarriers.remove(0);
+            if (phototransistor.getNODE().equals("SPSData.S7-1200.Inputs.Phototransistor_Conveyer_BeltSwap")){
+                //is last light barrier
+                //create ArrayList of passed light barriers
+                ArrayList<Timestamp> passedLightBarriers = new ArrayList<>();
 
-            //create speed variables
-            double speedShaper =0.0;
-            double speedDriller=0.0;
+                //add only timestamps of parts coming out of the light barrier
+                for(String key : phototransistors.keySet()) {
+                    ArrayList<Phototransistor> photoTransistorStates =  phototransistors.get(key);
+                    if (photoTransistorStates.get(1).isVALUE()) {
+                        passedLightBarriers.add(photoTransistorStates.get(1).getTIMESTAMP());
+                        photoTransistorStates.remove(0);
+                        photoTransistorStates.remove(1);
+                    }else{
+                        log.warn("State of "+key+" is not valid");
+                    }
+                }
 
-            //create report
-            Report  report = new Report(nextMachineOrderId,startTimeStamp,passedLightBarriers,speedShaper,speedDriller);
+                Timestamp startTimeStamp = passedLightBarriers.remove(0);
+
+                //create speed variables
+                double speedShaper = 0.0;
+                double speedDriller = 0.0;
+                String nextMachineOrderId = machineOrderIds.remove();
+                //create report
+                log.info("Report with machineOrderId: "+nextMachineOrderId+ " created");
+                Report report = new Report(nextMachineOrderId, startTimeStamp, passedLightBarriers, speedShaper, speedDriller);
+            }
         }
 
        }
