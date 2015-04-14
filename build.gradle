@@ -65,7 +65,6 @@ project(":DB") {
     dependencies {
         compile project(":Shared")
         compile project(":Model")
-        compile project(":IA")
         compile project(":MQ")
     }
     mainClassName = "de.dhbw.mannheim.iot.db.DBStarter"
@@ -79,6 +78,7 @@ project(":IA") {
         compile project(":Model")
         compile project(":MQ")
         compile project(":Communication")
+        compile project(":RTA")
         compile 'com.rabbitmq:amqp-client:3.5.1'
         compile 'xstream:xstream:1.2.2'
         compile fileTree(dir: 'libs', include: '*.jar')

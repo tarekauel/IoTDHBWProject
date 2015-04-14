@@ -4,6 +4,7 @@ import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import de.dhbw.mannheim.iot.communication.TcpClient;
+import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
 
@@ -22,8 +23,11 @@ public class Rta {
 
     private static Rta instance;
 
+    public static int OUTGOING_PORT = 3030;
+
     private EPServiceProvider epService;
     private TcpClient<Model, Class<? extends Model>> tcpClient;
+    private TcpRegisterServer<Class<? extends Model>, Model> resultProvider;
 
     private ArrayList<SimpleAlgorithm> simpleAlgorithms = new ArrayList<>();
 
@@ -40,6 +44,7 @@ public class Rta {
 
     public Rta(String ipMessageQueue, int portMessageQueue) {
         epService = EPServiceProviderManager.getDefaultProvider();
+        resultProvider = new TcpRegisterServer<>(OUTGOING_PORT);
         tcpClient = new TcpClient<>(ipMessageQueue, portMessageQueue, (Model m) -> {
             routeToEsper(m);
             for (SimpleAlgorithm s : simpleAlgorithms) {
@@ -53,6 +58,10 @@ public class Rta {
 
     private void routeToEsper(Model model) {
         epService.getEPRuntime().sendEvent(model);
+    }
+
+    public void provideResult(Model model) {
+        resultProvider.sendMessage(model);
     }
 
     public void registerAlgorithm(Algorithm algorithm) {

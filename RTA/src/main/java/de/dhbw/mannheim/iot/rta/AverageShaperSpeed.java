@@ -1,6 +1,7 @@
 package de.dhbw.mannheim.iot.rta;
 
 import com.espertech.esper.client.EventBean;
+import de.dhbw.mannheim.iot.model.AverageShaperSpeedResult;
 import de.dhbw.mannheim.iot.model.Report;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +17,9 @@ public class AverageShaperSpeed implements Algorithm {
     @Override
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
         EventBean event = newEvents[0];
-        log.trace("avg=" + event.get("avg(speedShaperRPM)"));
+        double average = (Double) event.get("avg(speedShaperRPM)");
+        log.info("avg=" + average);
+        Rta.getInstance().provideResult(new AverageShaperSpeedResult(average));
     }
 
     public ArrayList<String> getQueries() {
