@@ -108,7 +108,7 @@ project(":UI") {
         compile project(":Communication")
         compile project(":RTA")
     }
-    mainClassName = "de.dhbw.mannheim.iot.ui.UIHelloWorld"
+    mainClassName = "de.dhbw.mannheim.iot.ui.ConsoleUI"
 }
 
 project(":Communication") {

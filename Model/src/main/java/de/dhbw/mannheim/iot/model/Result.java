@@ -17,5 +17,4 @@ public abstract class Result extends Model {
     public Timestamp getTimestamp() {
         return timestamp;
     }
-
 }
