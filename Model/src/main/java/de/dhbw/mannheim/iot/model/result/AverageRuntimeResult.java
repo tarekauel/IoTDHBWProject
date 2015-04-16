@@ -1,4 +1,4 @@
-package de.dhbw.mannheim.iot.model;
+package de.dhbw.mannheim.iot.model.result;
 
 /**
  * @author Tarek Auel

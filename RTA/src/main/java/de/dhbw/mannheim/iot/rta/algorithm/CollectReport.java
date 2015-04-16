@@ -1,9 +1,11 @@
-package de.dhbw.mannheim.iot.rta;
+package de.dhbw.mannheim.iot.rta.algorithm;
 
-import de.dhbw.mannheim.iot.model.MachineOrder;
+import de.dhbw.mannheim.iot.model.machine.MachineOrder;
 import de.dhbw.mannheim.iot.model.Model;
-import de.dhbw.mannheim.iot.model.Phototransistor;
-import de.dhbw.mannheim.iot.model.Report;
+import de.dhbw.mannheim.iot.model.machine.Phototransistor;
+import de.dhbw.mannheim.iot.model.machine.Report;
+import de.dhbw.mannheim.iot.rta.Rta;
+import de.dhbw.mannheim.iot.rta.SimpleAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;

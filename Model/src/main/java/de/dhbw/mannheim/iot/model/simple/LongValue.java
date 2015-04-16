@@ -1,4 +1,6 @@
-package de.dhbw.mannheim.iot.model;
+package de.dhbw.mannheim.iot.model.simple;
+
+import de.dhbw.mannheim.iot.model.Model;
 
 /**
  * Created by D059166 on 09.04.2015.

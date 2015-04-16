@@ -3,6 +3,7 @@ package de.dhbw.mannheim.iot.rta;
 import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.ModelFactory;
+import de.dhbw.mannheim.iot.rta.algorithm.AverageShaperSpeed;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

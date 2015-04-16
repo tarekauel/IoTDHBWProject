@@ -1,8 +1,10 @@
-package de.dhbw.mannheim.iot.rta;
+package de.dhbw.mannheim.iot.rta.algorithm;
 
 import com.espertech.esper.client.EventBean;
-import de.dhbw.mannheim.iot.model.AverageShaperSpeedResult;
-import de.dhbw.mannheim.iot.model.Report;
+import de.dhbw.mannheim.iot.model.result.AverageShaperSpeedResult;
+import de.dhbw.mannheim.iot.model.machine.Report;
+import de.dhbw.mannheim.iot.rta.Algorithm;
+import de.dhbw.mannheim.iot.rta.Rta;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

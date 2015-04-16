@@ -1,12 +1,14 @@
-package de.dhbw.mannheim.iot.rta;
+package de.dhbw.mannheim.iot.rta.algorithm;
 
 import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.db.DBStarter;
 import de.dhbw.mannheim.iot.db.Request;
-import de.dhbw.mannheim.iot.model.DifferenceRuntimeResult;
-import de.dhbw.mannheim.iot.model.MachineOrder;
+import de.dhbw.mannheim.iot.model.result.DifferenceRuntimeResult;
+import de.dhbw.mannheim.iot.model.machine.MachineOrder;
 import de.dhbw.mannheim.iot.model.Model;
-import de.dhbw.mannheim.iot.model.Report;
+import de.dhbw.mannheim.iot.model.machine.Report;
+import de.dhbw.mannheim.iot.rta.Rta;
+import de.dhbw.mannheim.iot.rta.SimpleAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
