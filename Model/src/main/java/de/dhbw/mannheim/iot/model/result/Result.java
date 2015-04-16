@@ -1,4 +1,6 @@
-package de.dhbw.mannheim.iot.model;
+package de.dhbw.mannheim.iot.model.result;
+
+import de.dhbw.mannheim.iot.model.Model;
 
 import java.sql.Timestamp;
 import java.util.Date;

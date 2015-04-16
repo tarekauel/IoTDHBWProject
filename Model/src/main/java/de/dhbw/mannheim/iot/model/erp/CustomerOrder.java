@@ -1,6 +1,7 @@
-package de.dhbw.mannheim.iot.model;
+package de.dhbw.mannheim.iot.model.erp;
 
 import de.dhbw.mannheim.erpsim.model.OrderPosition;
+import de.dhbw.mannheim.iot.model.Model;
 
 /**
  * @author Tarek Auel

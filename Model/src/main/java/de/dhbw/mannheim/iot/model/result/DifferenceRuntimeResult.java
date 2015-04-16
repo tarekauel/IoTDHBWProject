@@ -1,4 +1,4 @@
-package de.dhbw.mannheim.iot.model;
+package de.dhbw.mannheim.iot.model.result;
 
 /**
  * Created by D059166 on 14.04.2015.

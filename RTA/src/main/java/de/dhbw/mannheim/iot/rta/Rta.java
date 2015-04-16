@@ -7,6 +7,10 @@ import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
+import de.dhbw.mannheim.iot.rta.algorithm.AverageRuntime;
+import de.dhbw.mannheim.iot.rta.algorithm.AverageShaperSpeed;
+import de.dhbw.mannheim.iot.rta.algorithm.CollectReport;
+import de.dhbw.mannheim.iot.rta.algorithm.DifferenceRuntime;
 
 import java.util.ArrayList;
 import java.util.Objects;

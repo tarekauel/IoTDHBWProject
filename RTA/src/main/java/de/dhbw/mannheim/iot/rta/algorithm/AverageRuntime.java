@@ -1,9 +1,11 @@
-package de.dhbw.mannheim.iot.rta;
+package de.dhbw.mannheim.iot.rta.algorithm;
 
 import com.espertech.esper.client.EventBean;
 import com.google.gson.Gson;
-import de.dhbw.mannheim.iot.model.AverageRuntimeResult;
-import de.dhbw.mannheim.iot.model.DifferenceRuntimeResult;
+import de.dhbw.mannheim.iot.model.result.AverageRuntimeResult;
+import de.dhbw.mannheim.iot.model.result.DifferenceRuntimeResult;
+import de.dhbw.mannheim.iot.rta.Algorithm;
+import de.dhbw.mannheim.iot.rta.Rta;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

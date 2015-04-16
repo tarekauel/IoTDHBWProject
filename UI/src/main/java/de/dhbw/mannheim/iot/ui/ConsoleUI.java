@@ -2,7 +2,7 @@ package de.dhbw.mannheim.iot.ui;
 
 import com.google.gson.Gson;
 import de.dhbw.mannheim.iot.communication.TcpClient;
-import de.dhbw.mannheim.iot.model.Result;
+import de.dhbw.mannheim.iot.model.result.Result;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
 import lombok.extern.slf4j.Slf4j;
 
