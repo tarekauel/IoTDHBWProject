@@ -5,7 +5,7 @@ var subSocket;
 var transport = 'websocket';
 
 // We are now ready to cut the request
-var request = { url: document.location.protocol + "//" + document.location.host + '/ws',
+var request = { url: document.location.protocol + "//" + document.location.host + '/random-long',
     contentType: "application/json",
     logLevel: 'debug',
     transport: transport,

@@ -109,7 +109,7 @@ project(":UI") {
         compile project(":RTA")
         compile 'org.atmosphere:nettosphere:2.2.1'
     }
-    mainClassName = "de.dhbw.mannheim.iot.ui.websocket.WebSocketConnector"
+    mainClassName = "de.dhbw.mannheim.iot.ui.ConsoleUI"
 }
 
 project(":Communication") {
@@ -127,6 +127,7 @@ project(":Starter") {
         compile project(":DB")
         compile project(":RTA")
         compile project(":IA")
+        compile project(":UI")
     }
 
     mainClassName = "de.dhbw.mannheim.iot.starter.Starter"

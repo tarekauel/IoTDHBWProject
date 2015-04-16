@@ -11,7 +11,7 @@ import org.atmosphere.config.service.WebSocketHandlerService;
  * Created by D059166 on 16.04.2015.
  */
 @Slf4j
-@WebSocketHandlerService(path = "/ws")
+@WebSocketHandlerService(path = "/average-runtime")
 public class AverageRuntimeHandler extends WebSocketHandler {
 
     private TcpClient<AverageRuntimeResult, Class<? extends AverageRuntimeResult>> tcpClient;

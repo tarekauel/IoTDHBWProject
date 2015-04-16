@@ -11,7 +11,7 @@ import org.atmosphere.config.service.WebSocketHandlerService;
  * Created by D059166 on 16.04.2015.
  */
 @Slf4j
-@WebSocketHandlerService(path = "/ws")
+@WebSocketHandlerService(path = "/random-long")
 public class RandomLongHandler extends WebSocketHandler {
 
     @Override
@@ -25,9 +25,6 @@ public class RandomLongHandler extends WebSocketHandler {
             }
         }
 
-        new TcpClient<AverageRuntimeResult, Class<? extends AverageRuntimeResult>>("localhost", MessageQueue.OUTGOING_PORT, (AverageRuntimeResult result) -> {
-            broadcast(result);
-        }).sendMessage(AverageRuntimeResult.class);
     }
 
 }

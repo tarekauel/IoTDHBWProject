@@ -7,6 +7,7 @@ import de.dhbw.mannheim.iot.ia.rabbitmq.MachineOrderQueue;
 import de.dhbw.mannheim.iot.ia.rabbitmq.ReportQueue;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
 import de.dhbw.mannheim.iot.rta.Rta;
+import de.dhbw.mannheim.iot.ui.websocket.WebSocketConnector;
 
 /**
  * @author Tarek Auel
@@ -20,8 +21,9 @@ public class Starter {
         Rta.main(args);
         ReportQueue.main(args);
         MachineOrderQueue.main(args);
-        Phototransistor.main(args);
+        //Phototransistor.main(args);
         RtaAdapter.main(args);
+        WebSocketConnector.main(args);
    }
 
 }
