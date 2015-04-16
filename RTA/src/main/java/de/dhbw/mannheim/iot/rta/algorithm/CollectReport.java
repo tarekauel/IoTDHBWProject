@@ -31,11 +31,13 @@ public class CollectReport implements SimpleAlgorithm {
             Phototransistor phototransistor = (Phototransistor) model;
             if (!processStarted) {
                if (phototransistor.getNode().equals("SPSData.S7-1200.Inputs.Phototransistor loading station")) {
-                   if (!phototransistor.getValue()) {
+                   if (phototransistor.getValue()) {
                        processStarted = true;
                    }
                }
-            } else {
+            }
+
+            if(!processStarted) {
                 return;
             }
 
@@ -63,11 +65,11 @@ public class CollectReport implements SimpleAlgorithm {
                 //add only timestamps of parts coming out of the light barrier
                 for(String key : phototransistors.keySet()) {
                     ArrayList<Phototransistor> photoTransistorStates =  phototransistors.get(key);
-                    if (photoTransistorStates != null && photoTransistorStates.size() >= 2 && !photoTransistorStates.get(1).getValue()) {
+                    if (photoTransistorStates != null && photoTransistorStates.size() >= 2 && photoTransistorStates.get(0).getValue() && !photoTransistorStates.get(1).getValue()) {
                         passedLightBarriers.add(photoTransistorStates.get(0).getTimestamp());
                         photoTransistorStates.remove(0);
                         photoTransistorStates.remove(1);
-                    }else{
+                    } else {
                         log.warn("State of " + key + " is not valid");
                     }
                 }
