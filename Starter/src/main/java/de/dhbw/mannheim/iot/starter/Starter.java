@@ -16,7 +16,7 @@ import de.dhbw.mannheim.iot.ui.websocket.WebSocketConnector;
 public class Starter {
 
     public static void main(String[] args) throws Exception {
-        MessageQueue.main(args);
+        //MessageQueue.main(args);
         DBStarter.main(args);
         Rta.main(args);
         ReportQueue.main(args);

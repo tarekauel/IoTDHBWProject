@@ -20,6 +20,7 @@ public class CollectReport implements SimpleAlgorithm {
 
     private LinkedList<String> machineOrderIds = new LinkedList<>();
     private HashMap<String, ArrayList<Phototransistor>> phototransistors= new HashMap<>();
+    private boolean processStarted = false;
 
     @Override
     public void receive(Model model) {
@@ -28,6 +29,16 @@ public class CollectReport implements SimpleAlgorithm {
         }
         if(model instanceof Phototransistor) {
             Phototransistor phototransistor = (Phototransistor) model;
+            if (!processStarted) {
+               if (phototransistor.getNode().equals("SPSData.S7-1200.Inputs.Phototransistor loading station")) {
+                   if (!phototransistor.getValue()) {
+                       processStarted = true;
+                   }
+               }
+            } else {
+                return;
+            }
+
             if (!phototransistors.containsKey(phototransistor.getNode())) {
                 //First phototransistorState received
                 ArrayList<Phototransistor> photostransistorState = new ArrayList<>();
@@ -40,7 +51,11 @@ public class CollectReport implements SimpleAlgorithm {
             }
 
 
-            if (phototransistor.getNode().equals("SPSData.S7-1200.Inputs.Phototransistor_Conveyer_BeltSwap")){
+            if (phototransistor.getNode().equals("SPSData.S7-1200.Inputs.Phototransistor conveyer belt swap")){
+                if (phototransistor.getValue()) {
+                    return;
+                }
+
                 //is last light barrier
                 //create ArrayList of passed light barriers
                 ArrayList<Timestamp> passedLightBarriers = new ArrayList<>();
@@ -48,25 +63,27 @@ public class CollectReport implements SimpleAlgorithm {
                 //add only timestamps of parts coming out of the light barrier
                 for(String key : phototransistors.keySet()) {
                     ArrayList<Phototransistor> photoTransistorStates =  phototransistors.get(key);
-                    if (photoTransistorStates.get(1).getValue()) {
-                        passedLightBarriers.add(photoTransistorStates.get(1).getTimestamp());
+                    if (photoTransistorStates != null && photoTransistorStates.size() >= 2 && !photoTransistorStates.get(1).getValue()) {
+                        passedLightBarriers.add(photoTransistorStates.get(0).getTimestamp());
                         photoTransistorStates.remove(0);
                         photoTransistorStates.remove(1);
                     }else{
-                        log.warn("State of "+key+" is not valid");
+                        log.warn("State of " + key + " is not valid");
                     }
                 }
 
-                Timestamp startTimeStamp = passedLightBarriers.remove(0);
+                if (passedLightBarriers.size() > 0) {
+                    Timestamp startTimeStamp = passedLightBarriers.remove(0);
 
-                //create speed variables
-                double speedShaper = 0.0;
-                double speedDriller = 0.0;
-                String nextMachineOrderId = machineOrderIds.remove();
-                //create report
-                log.info("Report with machineOrderId: "+nextMachineOrderId+ " created");
-                Report report = new Report(nextMachineOrderId, startTimeStamp, passedLightBarriers, speedShaper, speedDriller);
-                Rta.getInstance().provideResult(report);
+                    //create speed variables
+                    double speedShaper = 0.0;
+                    double speedDriller = 0.0;
+                    String nextMachineOrderId = machineOrderIds.remove();
+                    //create report
+                    log.info("Report with machineOrderId: " + nextMachineOrderId + " created");
+                    Report report = new Report(nextMachineOrderId, startTimeStamp, passedLightBarriers, speedShaper, speedDriller);
+                    Rta.getInstance().provideResult(report);
+                }
             }
         }
 
