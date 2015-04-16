@@ -42,7 +42,8 @@ public class Phototransistor extends OPC {
         }
         Timestamp ts = new Timestamp(dataValue.getSourceTimestamp().getTimeInMillis());
         log.trace("Transforming to Model: " + ts + " - " + NODE_NAME + " - " + dataValue.getValue().booleanValue());
-        return ModelFactory.getModelInstance(ts,NODE_NAME,dataValue.getValue().booleanValue());
+        Model m = ModelFactory.getModelInstance(ts,NODE_NAME,dataValue.getValue().booleanValue());
+        return m;
     }
 
 }

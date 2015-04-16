@@ -50,12 +50,23 @@ public class Rta {
         tcpClient = new TcpClient<>(ipMessageQueue, portMessageQueue, (Model m) -> {
             routeToEsper(m);
             for (SimpleAlgorithm s : simpleAlgorithms) {
-                if (Objects.equals(s.getModelClass(),m.getClass())) {
+                if (isSubclass(s.getModelClass(), m)) {
                     s.receive(m);
                 }
             }
         });
         tcpClient.sendMessage(Model.class);
+    }
+
+    private boolean isSubclass(Class<?> clazz, Object o) {
+        Class<?> c = o.getClass();
+        while (c != null) {
+            if (c == clazz) {
+                return true;
+            }
+            c = c.getSuperclass();
+        }
+        return false;
     }
 
     private void routeToEsper(Model model) {

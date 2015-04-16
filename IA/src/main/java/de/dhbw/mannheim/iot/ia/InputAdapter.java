@@ -1,5 +1,6 @@
 package de.dhbw.mannheim.iot.ia;
 
+import com.google.gson.Gson;
 import de.dhbw.mannheim.iot.communication.TcpClient;
 import de.dhbw.mannheim.iot.model.Model;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class InputAdapter {
+
+    Gson gson = new Gson();
 
     private TcpClient<Model, Model> messageQueue;
 
@@ -23,7 +26,7 @@ public abstract class InputAdapter {
     }
 
     protected void sendToMessageQueue(Model model) {
-        log.info("Model sent to MQ");
+        log.info("Sent to MQ: " + gson.toJson(model));
         messageQueue.sendMessage(model);
     }
 
