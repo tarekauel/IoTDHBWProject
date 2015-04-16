@@ -17,12 +17,18 @@ public class AverageRuntimeHandler extends WebSocketHandler {
     private TcpClient<AverageRuntimeResult, Class<? extends AverageRuntimeResult>> tcpClient;
 
     @Override
-    public void run() {
-        if(tcpClient != null) {
-            tcpClient.close();
+    protected void init() {
+        if(tcpClient == null) {
+            tcpClient = new TcpClient<>("localhost", MessageQueue.OUTGOING_PORT, this::broadcast);
+            tcpClient.sendMessage(AverageRuntimeResult.class);
         }
-        tcpClient = new TcpClient<>("localhost", MessageQueue.OUTGOING_PORT, this::broadcast);
-        tcpClient.sendMessage(AverageRuntimeResult.class);
     }
 
+    @Override
+    protected void stop() {
+        if(tcpClient != null) {
+            tcpClient.close();
+            tcpClient = null;
+        }
+    }
 }

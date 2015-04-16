@@ -20,7 +20,6 @@ public abstract class WebSocketHandler extends WebSocketHandlerAdapter implement
     private static Gson gson = new Gson();
 
     private ArrayList<WebSocket> connections = new ArrayList<>();
-    private Thread thread = new Thread(this);
     private boolean running = false;
 
     @Override
@@ -28,7 +27,7 @@ public abstract class WebSocketHandler extends WebSocketHandlerAdapter implement
         connections.add(webSocket);
         if(!running && connections.size() == 1) {
             running = true;
-            thread.start();
+            new Thread(this).start();
             log.info("Started thread");
         }
     }
@@ -52,8 +51,25 @@ public abstract class WebSocketHandler extends WebSocketHandlerAdapter implement
         }
     }
 
-    public boolean getRunning() {
-        return running;
-    };
+    @Override
+    public void run() {
+        init();
+        while(running) {
+            perform();
+        }
+        stop();
+    }
+
+    protected void init() {
+        return;
+    }
+
+    protected void perform() {
+        return;
+    }
+
+    protected  void stop() {
+        return;
+    }
 
 }

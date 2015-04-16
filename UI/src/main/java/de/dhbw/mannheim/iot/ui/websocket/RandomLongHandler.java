@@ -15,16 +15,13 @@ import org.atmosphere.config.service.WebSocketHandlerService;
 public class RandomLongHandler extends WebSocketHandler {
 
     @Override
-    public void run() {
-        while(getRunning()) {
-            try {
-                Thread.sleep(500);
-                broadcast(new LongValue(Math.round(Math.random() * 1000)));
-            } catch(InterruptedException e) {
-                //NOT EMPTY
-            }
+    public void perform() {
+        try {
+            Thread.sleep(500);
+            broadcast(new LongValue(Math.round(Math.random() * 1000)));
+        } catch(InterruptedException e) {
+            //NOT EMPTY
         }
-
     }
 
 }
