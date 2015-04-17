@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TcpRegisterServerTest {
+public class TcpServerPublishAndSubscribeTest {
 
     private int counter;
 
@@ -23,7 +23,7 @@ public class TcpRegisterServerTest {
     public synchronized void testSendMessage() throws Exception {
         final int PORT = PortManager.getPort();
 
-        TcpRegisterServer<Class<? extends DemoModel>, DemoModel> server = new TcpRegisterServer<>(PORT);
+        TcpServerPublishAndSubscribe<Class<? extends DemoModel>, DemoModel> server = new TcpServerPublishAndSubscribe<>(PORT);
 
         DemoModel testModel = new DemoModel("Hallo Welt");
 
@@ -52,7 +52,7 @@ public class TcpRegisterServerTest {
     public synchronized void testSendWithChild() throws Exception {
         final int PORT = PortManager.getPort();
 
-        TcpRegisterServer<Class<? extends DemoModel>, DemoModel> server = new TcpRegisterServer<>(PORT);
+        TcpServerPublishAndSubscribe<Class<? extends DemoModel>, DemoModel> server = new TcpServerPublishAndSubscribe<>(PORT);
 
         DemoModel testModel = new DemoModel("Hallo Welt");
         DemoModelChild testModelChild = new DemoModelChild("Hallo Welt", 123);
@@ -108,7 +108,7 @@ public class TcpRegisterServerTest {
     public synchronized void testSendWithChildAndInheritance() throws Exception {
         final int PORT = PortManager.getPort();
 
-        TcpRegisterServer<Class<? extends DemoModel>, DemoModel> server = new TcpRegisterServer<>(PORT);
+        TcpServerPublishAndSubscribe<Class<? extends DemoModel>, DemoModel> server = new TcpServerPublishAndSubscribe<>(PORT);
 
         DemoModel testModel = new DemoModel("Hallo Welt");
         DemoModelChild testModelChild = new DemoModelChild("Hallo Welt", 123);

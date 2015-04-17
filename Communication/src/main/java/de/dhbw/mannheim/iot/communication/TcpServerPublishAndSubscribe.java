@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @SuppressWarnings("unused")
 @Slf4j
-public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model> extends TcpServer<R> {
+public class TcpServerPublishAndSubscribe<R extends Class <? extends Model>,S extends Model> extends TcpServer<R> {
 
     // HashMap for saving object output streams for connected sockets
     private HashMap<R,ArrayList<ObjectOutputStream>> registrations = new HashMap<>();
@@ -27,7 +27,7 @@ public class TcpRegisterServer<R extends Class <? extends Model>,S extends Model
      * creates a RegisterTCPServer on a specific port which handles incoming registrations
      * @param port port number for ingoing connections
      */
-    public TcpRegisterServer(int port) {
+    public TcpServerPublishAndSubscribe(int port) {
         super(port);
     }
 

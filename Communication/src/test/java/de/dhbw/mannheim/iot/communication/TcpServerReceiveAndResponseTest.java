@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 @Slf4j
-public class TcpServerSendAndResponseTest {
+public class TcpServerReceiveAndResponseTest {
 
     private int counter;
 
@@ -24,7 +24,7 @@ public class TcpServerSendAndResponseTest {
     public synchronized void sendAndReceiveMessage() throws Exception {
         final int PORT = PortManager.getPort();
 
-        new TcpServerSendAndResponse<DemoModel,DemoModel>(PORT,message -> {
+        new TcpServerReceiveAndResponse<DemoModel,DemoModel>(PORT,message -> {
             log.trace("Got message: " + message);
             return message;
         });
@@ -56,7 +56,7 @@ public class TcpServerSendAndResponseTest {
     public synchronized void sendAndReceiveMessageTwoClients() throws Exception {
         final int PORT = PortManager.getPort();
 
-        new TcpServerSendAndResponse<DemoModel,DemoModel>(PORT,message -> {
+        new TcpServerReceiveAndResponse<DemoModel,DemoModel>(PORT,message -> {
             log.trace("Got message: " + message);
             return message;
         });

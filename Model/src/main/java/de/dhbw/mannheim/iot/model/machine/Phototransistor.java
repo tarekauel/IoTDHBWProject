@@ -9,25 +9,25 @@ import java.sql.Timestamp;
  */
 public class Phototransistor extends Model {
 
-    private final boolean VALUE;
-    private final Timestamp TIMESTAMP;
-    private final String NODE;
+    private final boolean value;
+    private final Timestamp timestamp;
+    private final String node;
 
     public Phototransistor(Timestamp timestamp, String node,boolean value) {
-        this.VALUE = value;
-        this.TIMESTAMP = timestamp;
-        this.NODE = node;
+        this.value = value;
+        this.timestamp = timestamp;
+        this.node = node;
     }
 
     public boolean getValue() {
-        return VALUE;
+        return value;
     }
 
     public Timestamp getTimestamp() {
-        return TIMESTAMP;
+        return timestamp;
     }
 
     public String getNode() {
-        return NODE;
+        return node;
     }
 }

@@ -1,7 +1,7 @@
 package de.dhbw.mannheim.iot.mq;
 
-import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
-import de.dhbw.mannheim.iot.communication.TcpServerSendAndResponse;
+import de.dhbw.mannheim.iot.communication.TcpServerPublishAndSubscribe;
+import de.dhbw.mannheim.iot.communication.TcpServerReceiveAndResponse;
 import de.dhbw.mannheim.iot.model.Model;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +28,8 @@ public class MessageQueue {
     }
 
     private MessageQueue(int portIngoing, int portOutgoing) {
-        TcpRegisterServer<Class<? extends Model>, Model> outgoingServer = new TcpRegisterServer<>(portOutgoing);
-        new TcpServerSendAndResponse<>(portIngoing, (Model m) -> {
+        TcpServerPublishAndSubscribe<Class<? extends Model>, Model> outgoingServer = new TcpServerPublishAndSubscribe<>(portOutgoing);
+        new TcpServerReceiveAndResponse<>(portIngoing, (Model m) -> {
             log.trace("Received model " + m);
             outgoingServer.sendMessage(m);
             return null;

@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
  */
 @SuppressWarnings("unused")
 @Slf4j
-public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
+public class TcpServerReceiveAndResponse<R, S> extends TcpServer<R> {
 
     private MessageListener<R,S> messageListener;
 
@@ -23,7 +23,7 @@ public class TcpServerSendAndResponse<R, S> extends TcpServer<R> {
      * @param messageListener lambda function, which is called for received messages
      *
      * */
-    public TcpServerSendAndResponse(int port, MessageListener<R, S> messageListener) {
+    public TcpServerReceiveAndResponse(int port, MessageListener<R, S> messageListener) {
         super(port);
         this.messageListener = messageListener;
     }

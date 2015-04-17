@@ -1,11 +1,10 @@
 package de.dhbw.mannheim.iot.db;
 
 import de.dhbw.mannheim.iot.communication.TcpClient;
-import de.dhbw.mannheim.iot.communication.TcpServerSendAndResponse;
+import de.dhbw.mannheim.iot.communication.TcpServerReceiveAndResponse;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.mq.MessageQueue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class DBStarter {
 
         new TcpClient<Model,Class<? extends Model>>("localhost", MessageQueue.OUTGOING_PORT, dbHandler::store).sendMessage(de.dhbw.mannheim.iot.model.Model.class);
 
-        new TcpServerSendAndResponse<Request, List<? extends Model>>(INGOING_PORT, (Request r) -> dbHandler.getEntity(r.getRequestedClass(), r.getProperties()));
+        new TcpServerReceiveAndResponse<Request, List<? extends Model>>(INGOING_PORT, (Request r) -> dbHandler.getEntity(r.getRequestedClass(), r.getProperties()));
 
     }
 }

@@ -1,6 +1,6 @@
 package de.dhbw.mannheim.iot.rta;
 
-import de.dhbw.mannheim.iot.communication.TcpRegisterServer;
+import de.dhbw.mannheim.iot.communication.TcpServerPublishAndSubscribe;
 import de.dhbw.mannheim.iot.model.Model;
 import de.dhbw.mannheim.iot.model.ModelFactory;
 import de.dhbw.mannheim.iot.rta.algorithm.AverageShaperSpeed;
@@ -14,11 +14,11 @@ import org.junit.Test;
 public class RtaTest {
 
     static int TEST_PORT = 9205;
-    static TcpRegisterServer<Class<? extends Model>,Model> server;
+    static TcpServerPublishAndSubscribe<Class<? extends Model>,Model> server;
 
     @BeforeClass
     public static void simulateMQ() {
-        server = new TcpRegisterServer<>(TEST_PORT);
+        server = new TcpServerPublishAndSubscribe<>(TEST_PORT);
     }
 
     @Test

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * This interface is the abstract interface for all models which are sent between our components
  */
 @Entity
-public class Model implements Serializable {
+public abstract class Model implements Serializable {
 
     @Id
     private ObjectId objectId;
